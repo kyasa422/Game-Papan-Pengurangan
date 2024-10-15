@@ -27,13 +27,7 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
       }
 
-      .drop-area {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        height: 50px;
-      }
+      
 
       /* Custom stick style */
     </style>
@@ -89,7 +83,7 @@
 
           <!-- Baris 2, Kolom 1 (Puluhan Awal) -->
           <div
-            class="w-full bg-slate-500 text-white text-center rounded-md flex justify-center items-center"
+            class="w-full bg-slate-500 text-white text-center rounded-md flex justify-center items-center drop-area"
             id="puluhan"
           >
             <span id="puluhanCount" class="font-bold text-lg ">0</span>
@@ -97,7 +91,7 @@
 
           <!-- Baris 2, Kolom 2 (Satuan Awal) -->
           <div
-            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md"
+            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
             id="satuan1"
           >
             <span id="satuanCount" class="font-bold text-lg ">0</span>
@@ -105,7 +99,7 @@
 
           <!-- Baris 3, Kolom 1 (Pengurangan Puluhan) -->
           <div
-            class="flex justify-center items-center w-full bg-slate-500 text-white text-center rounded-md"
+            class="flex justify-center items-center w-full bg-slate-500 text-white text-center rounded-md drop-area"
             id="puluhan2"
           >
             <span id="puluhanCount2" class="font-bold text-lg ">0</span>
@@ -113,7 +107,7 @@
 
           <!-- Baris 3, Kolom 2 (Pengurangan Satuan) -->
           <div
-            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md"
+            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
             id="satuan2"
           >
             <span id="satuanCount2" class="font-bold text-lg ">0</span>
@@ -242,15 +236,39 @@
         const stick = event.target;
         const touch = event.changedTouches[0];
         const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
-      
+        
         if (dropTarget && dropTarget.classList.contains("drop-area")) {
           dropTarget.appendChild(stick);  // Drop the stick into the correct drop area
           stick.style.position = "static"; // Reset the stick's position style
+      
+          // Implementasikan logika yang sama untuk penambahan nilai puluhan dan satuan
+          if (dropTarget.id === "puluhan") {
+            const multipliedValue = parseInt(stick.dataset.value) * 10;
+            if (puluhanTotal + multipliedValue <= 30) {
+              puluhanTotal += multipliedValue;
+              puluhanCount.textContent = puluhanTotal;
+            } else {
+              alert("Maksimal nilai puluhan adalah 30.");
+            }
+          } else if (dropTarget.id === "satuan1") {
+            const value = parseInt(stick.dataset.value);
+            if (satuanTotal + value <= 9) {
+              satuanTotal += value;
+              satuanCount.textContent = satuanTotal;
+            } else {
+              alert("Maksimal nilai satuan adalah 9.");
+            }
+          }
         } else {
-          // Stick not dropped in the right area, revert its position
+          // Revert stick position if not dropped on valid area
           stick.style.position = "static"; 
         }
+      
+        // Remove event listeners after touch ends
+        stick.removeEventListener("touchmove", handleTouchMove);
+        stick.removeEventListener("touchend", handleTouchEnd);
       }
+      
       
 
       function dragStart(event) {
