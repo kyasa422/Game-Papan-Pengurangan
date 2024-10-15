@@ -32,20 +32,12 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        font-size: 20px;
-        height: 70px;
+       
+        height: 50px;
       }
 
       /* Custom stick style */
-      .stick {
-        background-color: #ffcc80; 
-        height: 50px;
-        width: 25px;
-        border-radius: 5px;
-        cursor: touch;
-        margin-right: 5px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
-      }
+     
     </style>
   </head>
   <body class="flex items-center justify-center h-screen">
@@ -63,8 +55,8 @@
             <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox">
               <!-- Stik-stik -->
              
-              <div class="stick bg-[#ffcc80]  rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
-              <div class="stick bg-[#ffcc80] rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
+              <div class="stick bg-[#ffcc80]  rounded-md cursor-move shadow-md h-10 w-4 mx-1" draggable="true" data-value="1"></div>
+              <div class="stick bg-[#ffcc80] rounded-md cursor-move shadow-md  h-10 w-4 mx-1" draggable="true" data-value="1"></div>
               <!-- Tambahkan lebih banyak stik jika diperlukan -->
             </div>
           </div>
@@ -74,7 +66,7 @@
 
       <!-- Tempat Penampung Puluhan & Satuan -->
       <div
-        class="bordered-box col-span-2 w-full p-4 bg-gray-100 shadow-lg rounded-md"
+        class="bordered-box col-span-2 w-full  bg-gray-100 shadow-lg rounded-md"
       >
         <h2 class="text-lg font-semibold text-center">Tempat Stik</h2>
         <div class="flex">
@@ -84,34 +76,31 @@
 
         <div class="grid grid-cols-2 grid-rows-3 gap-2">
           <!-- Baris 1, Kolom 1 (Label Puluhan) -->
-
+        
           <!-- Baris 2, Kolom 1 (Puluhan Awal) -->
           <div
-            class="drop-area w-full bg-slate-500 text-white text-center p-4 rounded-md"
+            class="drop-area w-full bg-slate-500 text-white text-center rounded-md"
             id="puluhan"
           >
             <span id="puluhanCount" class="font-bold text-lg hidden">0</span>
           </div>
-
+        
           <!-- Baris 2, Kolom 2 (Satuan Awal) -->
           <div
-            class="drop-area w-full bg-slate-300 text-black text-center p-4 rounded-md"
+            class="drop-area w-full bg-slate-300 text-black text-center rounded-md"
             id="satuan1"
           >
             <span id="satuanCount" class="font-bold text-lg hidden">0</span>
           </div>
-
-
-
-
+        
           <!-- Baris 3, Kolom 1 (Pengurangan Puluhan) -->
           <div
-            class="drop-area w-full bg-slate-500 text-white text-center p-4 rounded-md"
+            class="drop-area w-full bg-slate-500 text-white text-center rounded-md"
             id="puluhan2"
           >
             <span id="puluhanCount2" class="font-bold text-lg hidden">0</span>
           </div>
-
+        
           <!-- Baris 3, Kolom 2 (Pengurangan Satuan) -->
           <div
             class="drop-area w-full bg-slate-300 text-black text-center rounded-md"
@@ -119,37 +108,38 @@
           >
             <span id="satuanCount2" class="font-bold text-lg hidden">0</span>
           </div>
-
+        
           <!-- Button for validation -->
           <div class="col-span-2 text-center">
             <div class="top-1/2 text-2xl font-bold text-right">-</div>
             <div class="border-t-4 border-black"></div>
-            <div class="flex justify-center items-center mt-4">
+            <div class="flex justify-center items-center mt-2"> <!-- Mengurangi margin-top -->
               <input
                 type="text"
                 id="answer"
-                class="border border-gray-300 p-2 rounded-lg w-24 text-center"
+                class="border border-gray-300 p-1 rounded-lg w-24 text-center" 
                 placeholder="Jawaban"
               />
-              <div class="mx-5">
+              <div class="mx-3">
                 hasil: <span id="hasil" class="font-bold text-lg"></span>
               </div>
             </div>
           </div>
-
+        
           <button
             id="validateButton"
-            class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg mx-auto flex"
+            class="mt-2 px-3 py-1 bg-blue-500 text-white rounded-lg mx-auto flex" 
           >
             Nilai Tempat
           </button>
           <button
             id="checkAnswer"
-            class="mt-4 px-4 py-2 bg-green-500 text-white rounded-lg mx-auto flex"
+            class="mt-2 px-3 py-1 bg-green-500 text-white rounded-lg mx-auto flex"
           >
             Cek Jawaban
           </button>
         </div>
+        
       </div>
     </div>
 
