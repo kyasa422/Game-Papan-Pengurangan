@@ -238,8 +238,50 @@
         stick.style.top = `${touch.pageY}px`;
       }
       function handleTouchEnd(event) {
-        // Here you would handle the 'drop' logic similarly to the desktop version
-        // For example, detecting the nearest drop area and placing the stick
+        event.preventDefault();
+        const value = parseInt(event.dataTransfer.getData("value"));
+        const element = event.dataTransfer.getData("element");
+        const target = event.target.id;
+
+        // Cek apakah yang di-drop adalah di puluhan atau satuan awal
+        if (target === "puluhan") {
+          const multipliedValue = value * 10; // Kalikan nilai dengan 10 untuk puluhan
+          if (puluhanTotal + multipliedValue <= 30) {
+            // maksimal 30 untuk puluhan
+            puluhanTotal += multipliedValue;
+            puluhanCount.textContent = puluhanTotal;
+            event.target.insertAdjacentHTML("beforeend", element);
+          } else {
+            alert("Maksimal nilai puluhan adalah 30.");
+          }
+        } else if (target === "satuan1") {
+          if (satuanTotal + value <= 9) {
+            // maksimal 9 untuk satuan
+            satuanTotal += value;
+            satuanCount.textContent = satuanTotal;
+            event.target.insertAdjacentHTML("beforeend", element);
+          } else {
+            alert("Maksimal nilai satuan adalah 9.");
+          }
+        } else if (target === "puluhan2") {
+          const multipliedValue = value * 10; // Kalikan nilai dengan 10 untuk puluhan pengurang
+          if (puluhanPengurang + multipliedValue) {
+            puluhanPengurang += multipliedValue;
+            puluhanCountPengurang.textContent = puluhanPengurang;
+            event.target.insertAdjacentHTML("beforeend", element);
+          } else {
+            alert("Nilai pengurang puluhan melebihi nilai awal.");
+          }
+        } else if (target === "satuan2") {
+          if (satuanPengurang + value <= 9) {
+            // Batas maksimal 9 untuk satuan pengurang
+            satuanPengurang += value;
+            satuanCountPengurang.textContent = satuanPengurang;
+            event.target.insertAdjacentHTML("beforeend", element);
+          } else {
+            alert("Maksimal nilai pengurang satuan adalah 9.");
+          }
+        }
       }
 
       function dragStart(event) {
