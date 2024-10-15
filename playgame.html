@@ -211,9 +211,16 @@
   });
 
   function dragStart(event) {
-      event.dataTransfer.setData("value", event.target.dataset.value);
-      event.dataTransfer.setData("element", event.target.outerHTML);
-  }
+    // Pastikan value yang di-drag adalah angka
+    const value = event.target.dataset.value;
+    if (value) {
+        event.dataTransfer.setData("value", value);
+        event.dataTransfer.setData("element", event.target.outerHTML);
+    } else {
+        alert("Elemen yang di-drag tidak memiliki data-value yang benar.");
+    }
+}
+
 
   function dragOver(event) {
       event.preventDefault();
@@ -240,24 +247,27 @@
   }
 
   function handleTouchEnd(event) {
-      event.preventDefault();
-      const stick = event.target;
-      const touch = event.changedTouches[0];
-      const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+    event.preventDefault();
+    const stick = event.target;
+    const touch = event.changedTouches[0];
+    const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
 
-      if (dropTarget && dropTarget.classList.contains("drop-area")) {
-          dropTarget.appendChild(stick);
-          stick.style.position = "static";
+    if (dropTarget && dropTarget.classList.contains("drop-area")) {
+        dropTarget.appendChild(stick);
+        stick.style.position = "static";
 
-          // Logika untuk penambahan nilai puluhan dan satuan
-          processDrop(dropTarget, stick.dataset.value);
-      } else {
-          stick.style.position = "static"; // Revert if not dropped on a valid area
-      }
+        // Retrieve the correct value from the dataset
+        const value = parseInt(stick.dataset.value);
+        
+        // Logika untuk penambahan nilai puluhan dan satuan
+        processDrop(dropTarget, value); 
+    } else {
+        stick.style.position = "static"; // Revert if not dropped on a valid area
+    }
 
-      stick.removeEventListener("touchmove", handleTouchMove);
-      stick.removeEventListener("touchend", handleTouchEnd);
-  }
+    stick.removeEventListener("touchmove", handleTouchMove);
+    stick.removeEventListener("touchend", handleTouchEnd);
+}
 
   // General drop function for both mouse and touch
   function drop(event) {
