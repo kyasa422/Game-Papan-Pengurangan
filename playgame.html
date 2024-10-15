@@ -279,23 +279,24 @@
           } else {
             alert("Maksimal nilai puluhan adalah 30.");
           }
-        } else if (target.id === "satuan1") {
+        }else if (target.id === "satuan1") {
+          // Penambahan yang benar untuk total di satuan1 (maksimal 9)
           if (satuanTotal + value <= 9) {
-            satuanTotal += value;
-            satuanCount.textContent = satuanTotal;
-            if (element) target.insertAdjacentHTML("beforeend", element);
+              satuanTotal += value;
+              satuanCount.textContent = satuanTotal;
+              if (element) target.insertAdjacentHTML("beforeend", element);
           } else {
-            alert("Maksimal nilai satuan adalah 9.");
+              alert("Maksimal nilai satuan adalah 9.");
           }
-        } else if (target.id === "puluhan2") {
-          const multipliedValue = value * 10;
-          puluhanPengurang += multipliedValue;
-          puluhanCountPengurang.textContent = puluhanPengurang;
-          if (element) target.insertAdjacentHTML("beforeend", element);
         } else if (target.id === "satuan2") {
-          satuanPengurang += value;
-          satuanCountPengurang.textContent = satuanPengurang;
-          if (element) target.insertAdjacentHTML("beforeend", element);
+          // Penambahan yang benar untuk total di satuan2 (pengurang)
+          if (satuanPengurang + value <= 9) {
+              satuanPengurang += value;
+              satuanCountPengurang.textContent = satuanPengurang;
+              if (element) target.insertAdjacentHTML("beforeend", element);
+          } else {
+              alert("Maksimal nilai satuan pengurang adalah 9.");
+          }
         }
       }
 
