@@ -33,12 +33,12 @@
         justify-content: center;
         align-items: center;
         font-size: 20px;
-        height: 90px;
+        height: 70px;
       }
 
       /* Custom stick style */
       .stick {
-        background-color: #ffcc80; /* Warna oranye lembut */
+        background-color: #ffcc80; 
         height: 50px;
         width: 10px;
         border-radius: 5px;
@@ -49,31 +49,28 @@
     </style>
   </head>
   <body class="flex items-center justify-center h-screen">
-    <div class="flex space-x-3">
+    <div class="flex w-full">
       <!-- Area Soal -->
-      <div class="bordered-box">
-        <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
-        <div class="mt-4">
-          <h2 class="text-lg font-semibold text-center">Soal</h2>
-          <div class="text-center text-3xl font-bold" id="question"></div>
-        </div>
-        <!-- Area Tempat Stik -->
-        <div class="bordered-box flex flex-col items-center mt-10">
-          <div class="text-center text-lg font-semibold">
-            Stik untuk Menghitung
+      <div class="flex items-center justify-center h-full">
+        <div class="bordered-box bg-[#fffbe6] border-2 border-[#d0a328] p-5 rounded-lg shadow-lg">
+          <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
+          <div class="text-center mt-4">
+            <div class="text-3xl font-bold" id="question"></div>
           </div>
-          <div
-            class="stick-box mt-4 flex flex-row space-x-4 justify-center"
-            id="stickBox"
-          >
-            <!-- Stik-stik -->
-            <div class="stick" draggable="true" data-value="1"></div>
-            <div class="stick" draggable="true" data-value="1"></div>
-            <div class="stick" draggable="true" data-value="1"></div>
-            <!-- Tambahkan lebih banyak stik jika diperlukan -->
+          <!-- Area Tempat Stik -->
+          <div class="bordered-box flex flex-col items-center mt-4">
+            <div class="text-center text-lg font-semibold">Stik</div>
+            <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox">
+              <!-- Stik-stik -->
+              <div class="stick bg-[#ffcc80] h-12 w-2.5 rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
+              <div class="stick bg-[#ffcc80] h-12 w-2.5 rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
+              <div class="stick bg-[#ffcc80] h-12 w-2.5 rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
+              <!-- Tambahkan lebih banyak stik jika diperlukan -->
+            </div>
           </div>
         </div>
       </div>
+      
 
       <!-- Tempat Penampung Puluhan & Satuan -->
       <div
@@ -85,7 +82,7 @@
           <h1 class="font-bold text-lg text-center flex-1 w-1/2">Satuan</h1>
         </div>
 
-        <div class="grid grid-cols-2 grid-rows-3 gap-4">
+        <div class="grid grid-cols-2 grid-rows-3 gap-2">
           <!-- Baris 1, Kolom 1 (Label Puluhan) -->
 
           <!-- Baris 2, Kolom 1 (Puluhan Awal) -->
@@ -172,13 +169,13 @@
       document.getElementById("question").innerHTML = `
             <div class="text-center">
             <!-- Bagian Minuend (angka atas) -->
-            <div class="text-4xl font-bold">${minuend}</div>
+            <div class="text-xl font-bold">${minuend}</div>
             
             <!-- Bagian Subtrahend (angka bawah dengan tanda pengurangan) -->
             <div class="relative">
                 <!-- Tanda pengurangan (-) -->
                 <!-- Subtrahend (angka bawah) -->
-                <div class="text-4xl font-bold ml-6">${subtrahend}</div>
+                <div class="text-xl font-bold ml-6">${subtrahend}</div>
                 <div class="absolute right-0 top-1/2 -translate-y-1/2 text-2xl font-bold">-</div>
 
             </div>
