@@ -12,7 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
     <style>
       body {
-      
         font-family: "Comic Sans MS", sans-serif;
       }
       .grid-container {
@@ -32,19 +31,20 @@
         display: flex;
         justify-content: center;
         align-items: center;
-       
+
         height: 50px;
       }
 
       /* Custom stick style */
-     
     </style>
   </head>
   <body class="flex items-center justify-center h-screen">
     <div class="flex w-full mt-24">
       <!-- Area Soal -->
       <div class="flex items-center justify-center h-screen">
-        <div class="bordered-box bg-[#fffbe6] border-2 border-[#d0a328] p-5 rounded-lg shadow-lg">
+        <div
+          class="bordered-box bg-[#fffbe6] border-2 border-[#d0a328] p-5 rounded-lg shadow-lg"
+        >
           <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
           <div class="text-center mt-4">
             <div class="text-3xl font-bold" id="question"></div>
@@ -52,21 +52,31 @@
           <!-- Area Tempat Stik -->
           <div class="bordered-box flex flex-col items-center mt-4">
             <div class="text-center text-lg font-semibold">Stik</div>
-            <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox">
+            <div
+              class="stick-box mt-4 flex flex-row space-x-4 justify-center"
+              id="stickBox"
+            >
               <!-- Stik-stik -->
-             
-              <div class="stick bg-[#ffcc80]  rounded-md cursor-move shadow-md h-10 w-4 mx-1" draggable="true" data-value="1"></div>
-              <div class="stick bg-[#ffcc80] rounded-md cursor-move shadow-md  h-10 w-4 mx-1" draggable="true" data-value="1"></div>
+
+              <div
+                class="stick bg-[#ffcc80] rounded-md cursor-move shadow-md h-14 w-4 mx-1"
+                draggable="true"
+                data-value="1"
+              ></div>
+              <div
+                class="stick bg-[#ffcc80] rounded-md cursor-move shadow-md h-14 w-4 mx-1"
+                draggable="true"
+                data-value="1"
+              ></div>
               <!-- Tambahkan lebih banyak stik jika diperlukan -->
             </div>
           </div>
         </div>
       </div>
-      
 
       <!-- Tempat Penampung Puluhan & Satuan -->
       <div
-        class="bordered-box col-span-2 w-full  bg-gray-100 shadow-lg rounded-md"
+        class="bordered-box col-span-2 w-full bg-gray-100 shadow-lg rounded-md"
       >
         <h2 class="text-lg font-semibold text-center">Tempat Stik</h2>
         <div class="flex">
@@ -76,48 +86,49 @@
 
         <div class="grid grid-cols-2 grid-rows-3 gap-2">
           <!-- Baris 1, Kolom 1 (Label Puluhan) -->
-        
+
           <!-- Baris 2, Kolom 1 (Puluhan Awal) -->
           <div
-            class="drop-area w-full bg-slate-500 text-white text-center rounded-md"
+            class="w-full bg-slate-500 text-white text-center rounded-md flex justify-center items-center"
             id="puluhan"
           >
             <span id="puluhanCount" class="font-bold text-lg hidden">0</span>
           </div>
-        
+
           <!-- Baris 2, Kolom 2 (Satuan Awal) -->
           <div
-            class="drop-area w-full bg-slate-300 text-black text-center rounded-md"
+            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md"
             id="satuan1"
           >
             <span id="satuanCount" class="font-bold text-lg hidden">0</span>
           </div>
-        
+
           <!-- Baris 3, Kolom 1 (Pengurangan Puluhan) -->
           <div
-            class="drop-area w-full bg-slate-500 text-white text-center rounded-md"
+            class="flex justify-center items-center w-full bg-slate-500 text-white text-center rounded-md"
             id="puluhan2"
           >
             <span id="puluhanCount2" class="font-bold text-lg hidden">0</span>
           </div>
-        
+
           <!-- Baris 3, Kolom 2 (Pengurangan Satuan) -->
           <div
-            class="drop-area w-full bg-slate-300 text-black text-center rounded-md"
+            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md"
             id="satuan2"
           >
             <span id="satuanCount2" class="font-bold text-lg hidden">0</span>
           </div>
-        
+
           <!-- Button for validation -->
           <div class="col-span-2 text-center">
             <div class="top-1/2 text-2xl font-bold text-right">-</div>
             <div class="border-t-4 border-black"></div>
-            <div class="flex justify-center items-center mt-2"> <!-- Mengurangi margin-top -->
+            <div class="flex justify-center items-center mt-2">
+              <!-- Mengurangi margin-top -->
               <input
                 type="text"
                 id="answer"
-                class="border border-gray-300 p-1 rounded-lg w-24 text-center" 
+                class="border border-gray-300 p-1 rounded-lg w-24 text-center"
                 placeholder="Jawaban"
               />
               <div class="mx-3">
@@ -125,10 +136,10 @@
               </div>
             </div>
           </div>
-        
+
           <button
             id="validateButton"
-            class="mt-2 px-3 py-1 bg-blue-500 text-white rounded-lg mx-auto flex" 
+            class="mt-2 px-3 py-1 bg-blue-500 text-white rounded-lg mx-auto flex"
           >
             Nilai Tempat
           </button>
@@ -139,7 +150,6 @@
             Cek Jawaban
           </button>
         </div>
-        
       </div>
     </div>
 
@@ -196,6 +206,7 @@
 
       sticks.forEach((stick) => {
         stick.addEventListener("dragstart", dragStart);
+        stick.addEventListener("touchstart", handleTouchStart);
       });
 
       [
@@ -207,6 +218,29 @@
         area.addEventListener("dragover", dragOver);
         area.addEventListener("drop", drop);
       });
+
+      function handleTouchStart(event) {
+        const touch = event.touches[0];
+        const stick = event.target;
+        stick.style.position = "absolute";
+        stick.style.left = `${touch.pageX}px`;
+        stick.style.top = `${touch.pageY}px`;
+
+        // Add touchmove to follow finger movement
+        stick.addEventListener("touchmove", handleTouchMove);
+        stick.addEventListener("touchend", handleTouchEnd);
+      }
+
+      function handleTouchMove(event) {
+        const touch = event.touches[0];
+        const stick = event.target;
+        stick.style.left = `${touch.pageX}px`;
+        stick.style.top = `${touch.pageY}px`;
+      }
+      function handleTouchEnd(event) {
+        // Here you would handle the 'drop' logic similarly to the desktop version
+        // For example, detecting the nearest drop area and placing the stick
+      }
 
       function dragStart(event) {
         event.dataTransfer.setData("value", event.target.dataset.value);
@@ -245,7 +279,7 @@
           }
         } else if (target === "puluhan2") {
           const multipliedValue = value * 10; // Kalikan nilai dengan 10 untuk puluhan pengurang
-          if (puluhanPengurang + multipliedValue ) {
+          if (puluhanPengurang + multipliedValue) {
             puluhanPengurang += multipliedValue;
             puluhanCountPengurang.textContent = puluhanPengurang;
             event.target.insertAdjacentHTML("beforeend", element);
