@@ -175,112 +175,111 @@
     </div>
 `;
 
-      // Variables for tracking total values
-      let puluhanTotal = 0;
-      let satuanTotal = 0;
-      let puluhanPengurang = 0;
-      let satuanPengurang = 0;
 
-      // Stik yang bisa di-drag
-      const sticks = document.querySelectorAll(".stick");
-      const puluhanArea = document.getElementById("puluhan");
-      const satuanArea = document.getElementById("satuan1");
-      const puluhanAreaPengurang = document.getElementById("puluhan2");
-      const satuanAreaPengurang = document.getElementById("satuan2");
+  let puluhanTotal = 0;
+  let satuanTotal = 0;
+  let puluhanPengurang = 0;
+  let satuanPengurang = 0;
 
-      const puluhanCount = document.getElementById("puluhanCount");
-      const satuanCount = document.getElementById("satuanCount");
-      const puluhanCountPengurang = document.getElementById("puluhanCount2");
-      const satuanCountPengurang = document.getElementById("satuanCount2");
+  // Stik yang bisa di-drag
+  const sticks = document.querySelectorAll(".stick");
+  const puluhanArea = document.getElementById("puluhan");
+  const satuanArea = document.getElementById("satuan1");
+  const puluhanAreaPengurang = document.getElementById("puluhan2");
+  const satuanAreaPengurang = document.getElementById("satuan2");
 
-      // Add drag and touch handlers to each stick
-      sticks.forEach((stick) => {
-        stick.addEventListener("dragstart", dragStart);
-        stick.addEventListener("touchstart", handleTouchStart);
-      });
+  const puluhanCount = document.getElementById("puluhanCount");
+  const satuanCount = document.getElementById("satuanCount");
+  const puluhanCountPengurang = document.getElementById("puluhanCount2");
+  const satuanCountPengurang = document.getElementById("satuanCount2");
 
-      // Add dragover and drop listeners to the areas
-      [
-        puluhanArea,
-        satuanArea,
-        puluhanAreaPengurang,
-        satuanAreaPengurang,
-      ].forEach((area) => {
-        area.addEventListener("dragover", dragOver);
-        area.addEventListener("drop", drop);
-      });
+  // Add drag and touch handlers to each stick
+  sticks.forEach((stick) => {
+      stick.addEventListener("dragstart", dragStart);
+      stick.addEventListener("touchstart", handleTouchStart);
+  });
 
-      function dragStart(event) {
-        event.dataTransfer.setData("value", event.target.dataset.value);
-        event.dataTransfer.setData("element", event.target.outerHTML);
-      }
+  // Add dragover and drop listeners to the areas
+  [
+      puluhanArea,
+      satuanArea,
+      puluhanAreaPengurang,
+      satuanAreaPengurang
+  ].forEach((area) => {
+      area.addEventListener("dragover", dragOver);
+      area.addEventListener("drop", drop);
+  });
 
-      function dragOver(event) {
-        event.preventDefault();
-      }
+  function dragStart(event) {
+      event.dataTransfer.setData("value", event.target.dataset.value);
+      event.dataTransfer.setData("element", event.target.outerHTML);
+  }
 
-      // Touch event handlers
-      function handleTouchStart(event) {
-        const touch = event.touches[0];
-        const stick = event.target;
-        stick.style.position = "absolute";
-        stick.style.left = `${touch.pageX}px`;
-        stick.style.top = `${touch.pageY}px`;
+  function dragOver(event) {
+      event.preventDefault();
+  }
 
-        // Add touchmove to follow finger movement
-        stick.addEventListener("touchmove", handleTouchMove);
-        stick.addEventListener("touchend", handleTouchEnd);
-      }
+  // Touch event handlers
+  function handleTouchStart(event) {
+      const touch = event.touches[0];
+      const stick = event.target;
+      stick.style.position = "absolute";
+      stick.style.left = `${touch.pageX}px`;
+      stick.style.top = `${touch.pageY}px`;
 
-      function handleTouchMove(event) {
-        const touch = event.touches[0];
-        const stick = event.target;
-        stick.style.left = `${touch.pageX}px`;
-        stick.style.top = `${touch.pageY}px`;
-      }
+      // Add touchmove to follow finger movement
+      stick.addEventListener("touchmove", handleTouchMove);
+      stick.addEventListener("touchend", handleTouchEnd);
+  }
 
-      function handleTouchEnd(event) {
-        event.preventDefault();
-        const stick = event.target;
-        const touch = event.changedTouches[0];
-        const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+  function handleTouchMove(event) {
+      const touch = event.touches[0];
+      const stick = event.target;
+      stick.style.left = `${touch.pageX}px`;
+      stick.style.top = `${touch.pageY}px`;
+  }
 
-        if (dropTarget && dropTarget.classList.contains("drop-area")) {
+  function handleTouchEnd(event) {
+      event.preventDefault();
+      const stick = event.target;
+      const touch = event.changedTouches[0];
+      const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+
+      if (dropTarget && dropTarget.classList.contains("drop-area")) {
           dropTarget.appendChild(stick);
           stick.style.position = "static";
 
           // Logika untuk penambahan nilai puluhan dan satuan
           processDrop(dropTarget, stick.dataset.value);
-        } else {
+      } else {
           stick.style.position = "static"; // Revert if not dropped on a valid area
-        }
-
-        stick.removeEventListener("touchmove", handleTouchMove);
-        stick.removeEventListener("touchend", handleTouchEnd);
       }
 
-      // General drop function for both mouse and touch
-      function drop(event) {
-        event.preventDefault();
-        const value = parseInt(event.dataTransfer.getData("value"));
-        const element = event.dataTransfer.getData("element");
-        const target = event.target.id;
+      stick.removeEventListener("touchmove", handleTouchMove);
+      stick.removeEventListener("touchend", handleTouchEnd);
+  }
 
-        processDrop(event.target, value, element);
-      }
+  // General drop function for both mouse and touch
+  function drop(event) {
+      event.preventDefault();
+      const value = parseInt(event.dataTransfer.getData("value"));
+      const element = event.dataTransfer.getData("element");
+      const target = event.target.id;
 
-      function processDrop(target, value, element = null) {
-        if (target.id === "puluhan") {
+      processDrop(event.target, value, element);
+  }
+
+  function processDrop(target, value, element = null) {
+      if (target.id === "puluhan") {
           const multipliedValue = value * 10;
           if (puluhanTotal + multipliedValue <= 30) {
-            puluhanTotal += multipliedValue;
-            puluhanCount.textContent = puluhanTotal;
-            if (element) target.insertAdjacentHTML("beforeend", element);
+              puluhanTotal += multipliedValue;
+              puluhanCount.textContent = puluhanTotal;
+              if (element) target.insertAdjacentHTML("beforeend", element);
           } else {
-            alert("Maksimal nilai puluhan adalah 30.");
+              alert("Maksimal nilai puluhan adalah 30.");
           }
-        }else if (target.id === "satuan1") {
-          // Penambahan yang benar untuk total di satuan1 (maksimal 9)
+      } else if (target.id === "satuan1") {
           if (satuanTotal + value <= 9) {
               satuanTotal += value;
               satuanCount.textContent = satuanTotal;
@@ -288,67 +287,58 @@
           } else {
               alert("Maksimal nilai satuan adalah 9.");
           }
-        } else if (target.id === "satuan2") {
-          // Penambahan yang benar untuk total di satuan2 (pengurang)
+      } else if (target.id === "puluhan2") {
+          const multipliedValue = value * 10;
+          puluhanPengurang += multipliedValue;
+          puluhanCountPengurang.textContent = puluhanPengurang;
+          if (element) target.insertAdjacentHTML("beforeend", element);
+      } else if (target.id === "satuan2") {
           if (satuanPengurang + value <= 9) {
               satuanPengurang += value;
               satuanCountPengurang.textContent = satuanPengurang;
               if (element) target.insertAdjacentHTML("beforeend", element);
           } else {
-              alert("Maksimal nilai satuan pengurang adalah 9.");
+              alert("Maksimal nilai satuan di pengurang adalah 9.");
           }
-        }
       }
+  }
 
-      document
-        .getElementById("validateButton")
-        .addEventListener("click", function () {
-          // Menghitung jumlah total di baris 1 (Puluhan dan Satuan)
-          const totalBaris1 = puluhanTotal + satuanTotal;
+  document.getElementById("validateButton").addEventListener("click", function () {
+      // Menghitung jumlah total di baris 1 (Puluhan dan Satuan)
+      const totalBaris1 = puluhanTotal + satuanTotal;
 
-          // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
-          const totalBaris2 = puluhanPengurang + satuanPengurang;
-          const hasil = totalBaris1 - totalBaris2;
+      // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
+      const totalBaris2 = puluhanPengurang + satuanPengurang;
 
-          // Variabel untuk menampilkan hasil
-          const hasilElement = document.getElementById("hasil");
+      if (totalBaris1 === minuend && totalBaris2 === subtrahend) {
+          alert("Benar! Total baris 1 sesuai dengan minuend dan total baris 2 sesuai dengan subtrahend.");
+      } else if (totalBaris1 !== minuend) {
+          alert("Salah! Baris 1 (jumlah stick) tidak sesuai dengan minuend.");
+      } else if (totalBaris2 !== subtrahend) {
+          alert("Salah! Baris 2 (jumlah stick) tidak sesuai dengan subtrahend.");
+      }
+  });
 
-          // Cek apakah total baris 1 sesuai dengan minuend dan total baris 2 sesuai dengan subtrahend
-          if (totalBaris1 === minuend && totalBaris2 === subtrahend) {
-            // Tampilkan hasil pengurangan pada elemen dengan id "hasil"
+  document
+  .getElementById("checkAnswer")
+  .addEventListener("click", function () {
+    const answer = document.getElementById("answer").value;
+    const totalBaris1 = puluhanTotal + satuanTotal;
 
-            alert(
-              "Benar! Total baris 1 sesuai dengan minuend dan total baris 2 sesuai dengan subtrahend."
-            );
-          } else if (totalBaris1 !== minuend) {
-            alert("Salah! Baris 1 (jumlah stick) tidak sesuai dengan minuend.");
-          } else if (totalBaris2 !== subtrahend) {
-            alert(
-              "Salah! Baris 2 (jumlah stick) tidak sesuai dengan subtrahend."
-            );
-          }
-        });
+    // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
+    const totalBaris2 = puluhanPengurang + satuanPengurang;
+    const hasil = totalBaris1 - totalBaris2;
 
-      // Cek Jawaban
-      document
-        .getElementById("checkAnswer")
-        .addEventListener("click", function () {
-          const answer = document.getElementById("answer").value;
-          const totalBaris1 = puluhanTotal + satuanTotal;
+    // Variabel untuk menampilkan hasil
+    const hasilElement = document.getElementById("hasil");
+    if (answer == correctAnswer) {
+      hasilElement.textContent = hasil;
+      alert("Jawaban benar!");
+    } else {
+      alert("Jawaban salah, coba lagi.");
+    }
+  });
+</script>
 
-          // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
-          const totalBaris2 = puluhanPengurang + satuanPengurang;
-          const hasil = totalBaris1 - totalBaris2;
-
-          // Variabel untuk menampilkan hasil
-          const hasilElement = document.getElementById("hasil");
-          if (answer == correctAnswer) {
-            hasilElement.textContent = hasil;
-            alert("Jawaban benar!");
-          } else {
-            alert("Jawaban salah, coba lagi.");
-          }
-        });
-    </script>
   </body>
 </html>
