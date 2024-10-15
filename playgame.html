@@ -12,7 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
     <style>
       body {
-        background-color: #f6fce1;
+      
         font-family: "Comic Sans MS", sans-serif;
       }
       .grid-container {
@@ -40,18 +40,18 @@
       .stick {
         background-color: #ffcc80; 
         height: 50px;
-        width: 10px;
+        width: 50px;
         border-radius: 5px;
-        cursor: grab;
+        cursor: pointer;
         margin-right: 5px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
       }
     </style>
   </head>
   <body class="flex items-center justify-center h-screen">
-    <div class="flex w-full">
+    <div class="flex w-full mt-24">
       <!-- Area Soal -->
-      <div class="flex items-center justify-center h-full">
+      <div class="flex items-center justify-center h-screen">
         <div class="bordered-box bg-[#fffbe6] border-2 border-[#d0a328] p-5 rounded-lg shadow-lg">
           <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
           <div class="text-center mt-4">
@@ -62,7 +62,7 @@
             <div class="text-center text-lg font-semibold">Stik</div>
             <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox">
               <!-- Stik-stik -->
-              <div class="stick bg-[#ffcc80] h-12 w-2.5 rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
+             
               <div class="stick bg-[#ffcc80] h-12 w-2.5 rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
               <div class="stick bg-[#ffcc80] h-12 w-2.5 rounded-md cursor-grab shadow-md" draggable="true" data-value="1"></div>
               <!-- Tambahkan lebih banyak stik jika diperlukan -->
