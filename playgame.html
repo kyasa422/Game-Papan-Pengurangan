@@ -19,8 +19,7 @@
         gap: 20px;
       }
       .bordered-box {
-        background-color: #fffbe6;
-        border: 2px solid #d0a328;
+     
         padding: 20px;
         border-radius: 15px;
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -29,8 +28,12 @@
       /* Custom stick style */
     </style>
   </head>
-  <body class="flex items-center justify-center h-screen">
-    <div class="flex w-full mt-24">
+  <div class="h-screen flex flex-col items-center justify-center relative">
+
+
+    <!-- Background Image with Opacity -->
+    <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('asset/image/bg.png');"></div>
+    <div class="flex w-full mt-24 z-10">
       <!-- Area Soal -->
       <div class="flex items-center justify-center h-screen">
         <div
@@ -42,7 +45,6 @@
           </div>
           <!-- Area Tempat Stik -->
           <div class="bordered-box flex flex-col items-center mt-4">
-            <div class="text-center text-lg font-semibold">Stik</div>
             <div
               class="stick-box mt-4 flex flex-row space-x-4 justify-center"
               id="stickBox"
@@ -59,8 +61,11 @@
                 draggable="true"
                 data-value="1"
               ></div>
+              
               <!-- Tambahkan lebih banyak stik jika diperlukan -->
             </div>
+            <div class="text-center text-lg font-semibold">Stik</div>
+
           </div>
         </div>
       </div>
@@ -69,52 +74,72 @@
       <div
         class="bordered-box col-span-2 w-full bg-gray-100 shadow-lg rounded-md"
       >
-        <h2 class="text-lg font-semibold text-center">Tempat Stik</h2>
         <div class="flex">
-          <h1 class="font-bold text-lg text-center flex-1 w-1/2">Puluhan</h1>
-          <h1 class="font-bold text-lg text-center flex-1 w-1/2">Satuan</h1>
+          <h1 class="font-bold text-lg text-left ">Puluhan</h1>
+          <h1 class="font-bold text-lg ml-32 ">Satuan</h1>
         </div>
 
-        <div class="grid grid-cols-2 grid-rows-3 gap-2">
-          <!-- Baris 1, Kolom 1 (Label Puluhan) -->
-
-          <!-- Baris 2, Kolom 1 (Puluhan Awal) -->
+        <div class="grid grid-cols-3 grid-rows-3 gap-2">
+  
           <div
             class="w-full bg-slate-500 text-white text-center rounded-md flex justify-center items-center drop-area"
-            id="puluhan"
-          >
+            id="puluhan">
             <span id="puluhanCount" class="font-bold text-lg">0</span>
           </div>
 
-          <!-- Baris 2, Kolom 2 (Satuan Awal) -->
-          <div
-            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
-            id="satuan1"
-          >
-            <span id="satuanCount" class="font-bold text-lg">0</span>
-          </div>
 
-          <!-- Baris 3, Kolom 1 (Pengurangan Puluhan) -->
           <div
-            class="flex justify-center items-center w-full bg-slate-500 text-white text-center rounded-md drop-area"
-            id="puluhan2"
-          >
-            <span id="puluhanCount2" class="font-bold text-lg">0</span>
-          </div>
+          class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
+          id="satuan1">
+          <span id="satuanCount" class="font-bold text-lg">0</span>
+         </div>
 
-          <!-- Baris 3, Kolom 2 (Pengurangan Satuan) -->
+
+
+         
+
+          <button
+          id="validateButton"
+          class="mt-2 px-3 py-1 bg-blue-500 text-white rounded-lg mx-auto flex"
+        >
+          Nilai Tempat
+        </button>
+          
+
+       
+
+
           <div
-            class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
-            id="satuan2"
+          class="flex justify-center items-center w-full bg-slate-500 text-white text-center rounded-md drop-area"
+          id="puluhan2"
+        >
+          <span id="puluhanCount2" class="font-bold text-lg">0</span>
+        </div>
+
+        <div
+        class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
+        id="satuan2">
+        <span id="satuanCount2" class="font-bold text-lg ">0</span>
+      </div>
+        
+        
+
+         
+        
+
+        <button
+            id="checkAnswer"
+            class="mt-2 px-3 py-1 bg-green-500 text-white rounded-lg mx-auto flex"
           >
-            <span id="satuanCount2" class="font-bold text-lg ">0</span>
-          </div>
+            Cek Jawaban
+          </button>
+          
 
           <!-- Button for validation -->
           <div class="col-span-2 text-center">
             <div class="top-1/2 text-2xl font-bold text-right">-</div>
             <div class="border-t-4 border-black"></div>
-            <div class="flex justify-center items-center mt-2">
+            <div class="flex justify-center items-center">
               <!-- Mengurangi margin-top -->
               <input
                 type="text"
@@ -128,21 +153,13 @@
             </div>
           </div>
 
-          <button
-            id="validateButton"
-            class="mt-2 px-3 py-1 bg-blue-500 text-white rounded-lg mx-auto flex"
-          >
-            Nilai Tempat
-          </button>
-          <button
-            id="checkAnswer"
-            class="mt-2 px-3 py-1 bg-green-500 text-white rounded-lg mx-auto flex"
-          >
-            Cek Jawaban
-          </button>
+        
+          
         </div>
       </div>
     </div>
+    </div>
+  </div>
 
     <script>
       // Fungsi untuk menghasilkan bilangan acak dari 1 hingga max
