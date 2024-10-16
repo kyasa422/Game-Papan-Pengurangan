@@ -9,7 +9,6 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
     <style>
       body {
         font-family: "Comic Sans MS", sans-serif;
@@ -108,7 +107,7 @@
             class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
             id="satuan2"
           >
-            <span id="satuanCount2" class="font-bold text-lg">0</span>
+            <span id="satuanCount2" class="font-bold text-lg ">0</span>
           </div>
 
           <!-- Button for validation -->
@@ -207,7 +206,7 @@
       satuanAreaPengurang
   ].forEach((area) => {
       area.addEventListener("dragover", dragOver);
-      area.addEventListener("drop", drop);
+      area.addEventListener("drop", drop,{passive: false});
   });
 
   function dragStart(event) {
@@ -228,6 +227,7 @@
 
   // Touch event handlers
   function handleTouchStart(event) {
+    event.preventDefault();
       const touch = event.touches[0];
       const stick = event.target;
       stick.style.position = "absolute";
@@ -235,11 +235,12 @@
       stick.style.top = `${touch.pageY}px`;
 
       // Add touchmove to follow finger movement
-      stick.addEventListener("touchmove", handleTouchMove);
-      stick.addEventListener("touchend", handleTouchEnd);
+      stick.addEventListener("touchmove", handleTouchMove, {passive: false});
+      stick.addEventListener("touchend", handleTouchEnd, {passive: false});
   }
 
   function handleTouchMove(event) {
+    event.preventDefault();
       const touch = event.touches[0];
       const stick = event.target;
       stick.style.left = `${touch.pageX}px`;
@@ -269,6 +270,31 @@
     stick.removeEventListener("touchend", handleTouchEnd);
 }
 
+// Define stick container for original sticks
+const stickContainer = document.getElementById('stickBox');
+
+// Function to add new stick to the original container
+function addNewStick() {
+    // Create a new stick element
+    const newStick = document.createElement('div');
+    newStick.classList.add('stick', 'bg-[#ffcc80]', 'rounded-md', 'cursor-move', 'shadow-md', 'h-14', 'w-4', 'mx-1');
+    newStick.setAttribute('draggable', 'true');
+    newStick.setAttribute('data-value', '1');
+    
+    // Add drag and touch handlers to the new stick
+    newStick.addEventListener('dragstart', dragStart);
+    newStick.addEventListener('touchstart', handleTouchStart);
+    
+    // Append the new stick to the container
+    stickContainer.appendChild(newStick);
+}
+
+// Add initial sticks to the container
+document.querySelectorAll('.stick').forEach((stick) => {
+    stick.addEventListener('dragstart', dragStart);
+    stick.addEventListener('touchstart', handleTouchStart);
+});
+
   // General drop function for both mouse and touch
   function drop(event) {
       event.preventDefault();
@@ -286,6 +312,7 @@
               puluhanTotal += multipliedValue;
               puluhanCount.textContent = puluhanTotal;
               if (element) target.insertAdjacentHTML("beforeend", element);
+              addNewStick();
           } else {
               alert("Maksimal nilai puluhan adalah 30.");
           }
@@ -294,7 +321,13 @@
           // maksimal 9 untuk satuan
           satuanTotal += value;
           satuanCount.textContent = satuanTotal;
-          event.target.insertAdjacentHTML("beforeend", element);
+          if (element) {
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = element;
+            const newStick = tempDiv.firstChild;
+
+            target.appendChild(newStick); // Append the new element if necessary
+        }addNewStick();
         } else {
           alert("Maksimal nilai satuan adalah 9.");
         }
@@ -303,12 +336,20 @@
           puluhanPengurang += multipliedValue;
           puluhanCountPengurang.textContent = puluhanPengurang;
           if (element) target.insertAdjacentHTML("beforeend", element);
+          addNewStick();
       } else if (target.id === "satuan2") {
         if (satuanPengurang + value <= 9) {
           // Batas maksimal 9 untuk satuan pengurang
           satuanPengurang += value;
           satuanCountPengurang.textContent = satuanPengurang;
-          event.target.insertAdjacentHTML("beforeend", element);
+           // Check if element needs to be added
+           if (element) {
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = element;
+            const newStick = tempDiv.firstChild;
+
+            target.appendChild(newStick); // Append the new element if necessary
+        }addNewStick();
         } else {
           alert("Maksimal nilai pengurang satuan adalah 9.");
         }
