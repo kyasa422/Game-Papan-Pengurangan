@@ -1,21 +1,71 @@
 <!DOCTYPE html>
 <html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link
-    href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    rel="stylesheet"
-  />
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
     <title>Selamat Datang</title>
-</head>
-<body >
+  </head>
 
-    <h1>profile</h1>
-   
-</body>
+  <body class="flex flex-col items-center justify-center relative">
+    <!-- Background Image with Opacity -->
+    <div
+      class="absolute inset-0 bg-cover bg-center opacity-70"
+      style="background-image: url('asset/image/bg.png')"
+    ></div>
 
+    <!-- Content Wrapper -->
+    <div
+      class="relative z-10 flex flex-col items-center justify-center space-y-6 p-4"
+    >
+      <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-6">
+        <h1
+      class="text-4xl sm:text-5xl font-bold text-orange-600 mb-6 text-center"
+    >
+      Tentang Saya
+    </h1>
+
+      <h2 class="text-xl sm:text-xl font-semibold text-gray-700 mb-4">
+        <span class="text-orange-600">Nama:</span> Anggita Zuniatu Zahrah
+      </h2>
+      <h2 class="text-xl sm:text-xl font-semibold text-gray-700 mb-6">
+        <span class="text-orange-600">Asal:</span> Universitas Pendidikan Indonesia
+      </h2>
+
+      <p class="text-gray-600 leading-relaxed text-lg sm:text-xl">
+        Saya, Anggita Zuniatu Zahrah, merupakan mahasiswi di Universitas Pendidikan Indonesia (UPI) dengan fokus studi di jurusan Pendidikan. Saat ini, saya berkomitmen untuk mengembangkan kompetensi akademik serta keterampilan profesional dalam bidang pendidikan, dengan tujuan berkontribusi pada peningkatan mutu pembelajaran di Indonesia.
+      </p>
+
+
+       
+
+
+        <div class="flex justify-between items-center w-full px-4">
+          <!-- Tombol atas -->
+          <a href="/play.html">
+              <button class="flex items-center">
+                  <img src="/asset/image/left-arrow_16799279.png" alt="" width="40px">
+              </button>
+          </a>
+      
+          <!-- Tombol bawah -->
+          <a href="/playgame.html">
+              <button class="flex items-center">
+                  <img src="/asset/image/play_13965949.png" alt="" width="40px">
+              </button>
+          </a>
+      </div>
+
+
+      </div>
+    </div>
+  </body>
 </html>

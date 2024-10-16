@@ -9,7 +9,6 @@
       rel="stylesheet"
     />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
     <style>
       body {
         font-family: "Comic Sans MS", sans-serif;
@@ -108,7 +107,7 @@
             class="flex justify-center items-center w-full bg-slate-300 text-black text-center rounded-md drop-area"
             id="satuan2"
           >
-            <span id="satuanCount2" class="font-bold text-lg">0</span>
+            <span id="satuanCount2" class="font-bold text-lg ">0</span>
           </div>
 
           <!-- Button for validation -->
@@ -147,6 +146,7 @@
 
     <script>
       // Fungsi untuk menghasilkan bilangan acak dari 1 hingga max
+      // Fungsi untuk menghasilkan bilangan acak dari 1 hingga max
       function getRandomInt(max) {
         return Math.floor(Math.random() * max) + 1;
       }
@@ -155,220 +155,243 @@
       let minuend = getRandomInt(30); // Bilangan pertama (maksimal 30)
       let subtrahend = getRandomInt(minuend - 1); // Bilangan kedua (lebih kecil dari bilangan pertama)
       let correctAnswer = minuend - subtrahend;
+
       // Tampilkan soal dengan format khusus
       document.getElementById("question").innerHTML = `
-            <div class="text-center">
-            <!-- Bagian Minuend (angka atas) -->
-            <div class="text-xl font-bold">${minuend}</div>
-            
-            <!-- Bagian Subtrahend (angka bawah dengan tanda pengurangan) -->
-            <div class="relative">
-                <!-- Tanda pengurangan (-) -->
-                <!-- Subtrahend (angka bawah) -->
-                <div class="text-xl font-bold ml-6">${subtrahend}</div>
-                <div class="absolute right-0 top-1/2 -translate-y-1/2 text-2xl font-bold">-</div>
+    <div class="text-center">
+        <!-- Bagian Minuend (angka atas) -->
+        <div class="text-xl font-bold">${minuend}</div>
+        
+        <!-- Bagian Subtrahend (angka bawah dengan tanda pengurangan) -->
+        <div class="relative">
+            <!-- Tanda pengurangan (-) -->
+            <div class="text-xl font-bold ml-6">${subtrahend}</div>
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 text-2xl font-bold">-</div>
+        </div>
+        
+        <!-- Garis Bawah -->
+        <div class="border-t-4 border-black mt-2"></div>
+    </div>
+`;
 
-            </div>
-            
-            <!-- Garis Bawah -->
 
-            <div class="border-t-4 border-black mt-2"></div>
-            </div>
-            `;
+  let puluhanTotal = 0;
+  let satuanTotal = 0;
+  let puluhanPengurang = 0;
+  let satuanPengurang = 0;
 
-      // Variabel untuk menyimpan jumlah nilai yang di-drop
-      let puluhanTotal = 0;
-      let satuanTotal = 0;
-      let puluhanPengurang = 0;
-      let satuanPengurang = 0;
+  // Stik yang bisa di-drag
+  const sticks = document.querySelectorAll(".stick");
+  const puluhanArea = document.getElementById("puluhan");
+  const satuanArea = document.getElementById("satuan1");
+  const puluhanAreaPengurang = document.getElementById("puluhan2");
+  const satuanAreaPengurang = document.getElementById("satuan2");
 
-      // Stik yang bisa di-drag
-      const sticks = document.querySelectorAll(".stick");
-      const puluhanArea = document.getElementById("puluhan");
-      const satuanArea = document.getElementById("satuan1");
-      const puluhanAreaPengurang = document.getElementById("puluhan2");
-      const satuanAreaPengurang = document.getElementById("satuan2");
-      const puluhanCount = document.getElementById("puluhanCount");
-      const satuanCount = document.getElementById("satuanCount");
+  const puluhanCount = document.getElementById("puluhanCount");
+  const satuanCount = document.getElementById("satuanCount");
+  const puluhanCountPengurang = document.getElementById("puluhanCount2");
+  const satuanCountPengurang = document.getElementById("satuanCount2");
 
-      const puluhanCountPengurang = document.getElementById("puluhanCount2");
-      const satuanCountPengurang = document.getElementById("satuanCount2");
+  // Add drag and touch handlers to each stick
+  sticks.forEach((stick) => {
+      stick.addEventListener("dragstart", dragStart);
+      stick.addEventListener("touchstart", handleTouchStart);
+  });
 
-      sticks.forEach((stick) => {
-        stick.addEventListener("dragstart", dragStart);
-        stick.addEventListener("touchstart", handleTouchStart);
-      });
+  // Add dragover and drop listeners to the areas
+  [
+      puluhanArea,
+      satuanArea,
+      puluhanAreaPengurang,
+      satuanAreaPengurang
+  ].forEach((area) => {
+      area.addEventListener("dragover", dragOver);
+      area.addEventListener("drop", drop,{passive: false});
+  });
 
-      [
-        puluhanArea,
-        satuanArea,
-        puluhanAreaPengurang,
-        satuanAreaPengurang,
-      ].forEach((area) => {
-        area.addEventListener("dragover", dragOver);
-        area.addEventListener("drop", drop);
-      });
+  function dragStart(event) {
+    // Pastikan value yang di-drag adalah angka
+    const value = event.target.dataset.value;
+    if (value) {
+        event.dataTransfer.setData("value", value);
+        event.dataTransfer.setData("element", event.target.outerHTML);
+    } else {
+        alert("Elemen yang di-drag tidak memiliki data-value yang benar.");
+    }
+}
 
-      function handleTouchStart(event) {
-        const touch = event.touches[0];
-        const stick = event.target;
-        stick.style.position = "absolute";
-        stick.style.left = `${touch.pageX}px`;
-        stick.style.top = `${touch.pageY}px`;
 
-        // Add touchmove to follow finger movement
-        stick.addEventListener("touchmove", handleTouchMove);
-        stick.addEventListener("touchend", handleTouchEnd);
-      }
+  function dragOver(event) {
+      event.preventDefault();
+  }
 
-      function handleTouchMove(event) {
-        const touch = event.touches[0];
-        const stick = event.target;
-        stick.style.left = `${touch.pageX}px`;
-        stick.style.top = `${touch.pageY}px`;
-      }
-      function handleTouchEnd(event) {
-        event.preventDefault();
-        const stick = event.target;
-        const touch = event.changedTouches[0];
-        const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+  // Touch event handlers
+  function handleTouchStart(event) {
+    event.preventDefault();
+      const touch = event.touches[0];
+      const stick = event.target;
+      stick.style.position = "absolute";
+      stick.style.left = `${touch.pageX}px`;
+      stick.style.top = `${touch.pageY}px`;
 
-        if (dropTarget && dropTarget.classList.contains("drop-area")) {
-          dropTarget.appendChild(stick); // Drop the stick into the correct drop area
-          stick.style.position = "static"; // Reset the stick's position style
+      // Add touchmove to follow finger movement
+      stick.addEventListener("touchmove", handleTouchMove, {passive: false});
+      stick.addEventListener("touchend", handleTouchEnd, {passive: false});
+  }
 
-          // Implementasikan logika yang sama untuk penambahan nilai puluhan dan satuan
-          if (dropTarget.id === "puluhan") {
-            const multipliedValue = parseInt(stick.dataset.value) * 10;
-            if (puluhanTotal + multipliedValue <= 30) {
+  function handleTouchMove(event) {
+    event.preventDefault();
+      const touch = event.touches[0];
+      const stick = event.target;
+      stick.style.left = `${touch.pageX}px`;
+      stick.style.top = `${touch.pageY}px`;
+  }
+
+  function handleTouchEnd(event) {
+    event.preventDefault();
+    const stick = event.target;
+    const touch = event.changedTouches[0];
+    const dropTarget = document.elementFromPoint(touch.pageX, touch.pageY);
+
+    if (dropTarget && dropTarget.classList.contains("drop-area")) {
+        dropTarget.appendChild(stick);
+        stick.style.position = "static";
+
+        // Retrieve the correct value from the dataset
+        const value = parseInt(stick.dataset.value);
+        
+        // Logika untuk penambahan nilai puluhan dan satuan
+        processDrop(dropTarget, value); 
+    } else {
+        stick.style.position = "static"; // Revert if not dropped on a valid area
+    }
+
+    stick.removeEventListener("touchmove", handleTouchMove);
+    stick.removeEventListener("touchend", handleTouchEnd);
+}
+
+// Define stick container for original sticks
+const stickContainer = document.getElementById('stickBox');
+
+// Function to add new stick to the original container
+function addNewStick() {
+    // Create a new stick element
+    const newStick = document.createElement('div');
+    newStick.classList.add('stick', 'bg-[#ffcc80]', 'rounded-md', 'cursor-move', 'shadow-md', 'h-14', 'w-4', 'mx-1');
+    newStick.setAttribute('draggable', 'true');
+    newStick.setAttribute('data-value', '1');
+    
+    // Add drag and touch handlers to the new stick
+    newStick.addEventListener('dragstart', dragStart);
+    newStick.addEventListener('touchstart', handleTouchStart);
+    
+    // Append the new stick to the container
+    stickContainer.appendChild(newStick);
+}
+
+// Add initial sticks to the container
+document.querySelectorAll('.stick').forEach((stick) => {
+    stick.addEventListener('dragstart', dragStart);
+    stick.addEventListener('touchstart', handleTouchStart);
+});
+
+  // General drop function for both mouse and touch
+  function drop(event) {
+      event.preventDefault();
+      const value = parseInt(event.dataTransfer.getData("value"));
+      const element = event.dataTransfer.getData("element");
+      const target = event.target.id;
+
+      processDrop(event.target, value, element);
+  }
+
+  function processDrop(target, value, element = null) {
+      if (target.id === "puluhan") {
+          const multipliedValue = value * 10;
+          if (puluhanTotal + multipliedValue <= 30) {
               puluhanTotal += multipliedValue;
               puluhanCount.textContent = puluhanTotal;
-            } else {
+              if (element) target.insertAdjacentHTML("beforeend", element);
+              addNewStick();
+          } else {
               alert("Maksimal nilai puluhan adalah 30.");
-            }
-          } else if (dropTarget.id === "satuan1") {
-            const value = parseInt(stick.dataset.value);
-            if (satuanTotal + value <= 9) {
-              satuanTotal += value;
-              satuanCount.textContent = satuanTotal;
-            } else {
-              alert("Maksimal nilai satuan adalah 9.");
-            }
           }
+      } else if (target.id === "satuan1") {
+        if (satuanTotal + value <= 9) {
+          // maksimal 9 untuk satuan
+          satuanTotal += value;
+          satuanCount.textContent = satuanTotal;
+          if (element) {
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = element;
+            const newStick = tempDiv.firstChild;
+
+            target.appendChild(newStick); // Append the new element if necessary
+        }addNewStick();
         } else {
-          // Revert stick position if not dropped on valid area
-          stick.style.position = "static";
+          alert("Maksimal nilai satuan adalah 9.");
         }
+      } else if (target.id === "puluhan2") {
+          const multipliedValue = value * 10;
+          puluhanPengurang += multipliedValue;
+          puluhanCountPengurang.textContent = puluhanPengurang;
+          if (element) target.insertAdjacentHTML("beforeend", element);
+          addNewStick();
+      } else if (target.id === "satuan2") {
+        if (satuanPengurang + value <= 9) {
+          // Batas maksimal 9 untuk satuan pengurang
+          satuanPengurang += value;
+          satuanCountPengurang.textContent = satuanPengurang;
+           // Check if element needs to be added
+           if (element) {
+            let tempDiv = document.createElement('div');
+            tempDiv.innerHTML = element;
+            const newStick = tempDiv.firstChild;
 
-        // Remove event listeners after touch ends
-        stick.removeEventListener("touchmove", handleTouchMove);
-        stick.removeEventListener("touchend", handleTouchEnd);
-      }
-
-      function dragStart(event) {
-        event.dataTransfer.setData("value", event.target.dataset.value);
-        event.dataTransfer.setData("element", event.target.outerHTML);
-      }
-
-      function dragOver(event) {
-        event.preventDefault();
-      }
-
-      function drop(event) {
-        event.preventDefault();
-        const value = parseInt(event.dataTransfer.getData("value"));
-        const element = event.dataTransfer.getData("element");
-        const target = event.target.id;
-
-        // Cek apakah yang di-drop adalah di puluhan atau satuan awal
-        if (target === "puluhan") {
-          const multipliedValue = value * 10; // Kalikan nilai dengan 10 untuk puluhan
-          if (puluhanTotal + multipliedValue <= 30) {
-            // maksimal 30 untuk puluhan
-            puluhanTotal += multipliedValue;
-            puluhanCount.textContent = puluhanTotal;
-            event.target.insertAdjacentHTML("beforeend", element);
-          } else {
-            alert("Maksimal nilai puluhan adalah 30.");
-          }
-        } else if (target === "satuan1") {
-          if (satuanTotal + value <= 9) {
-            // maksimal 9 untuk satuan
-            satuanTotal += value;
-            satuanCount.textContent = satuanTotal;
-            event.target.insertAdjacentHTML("beforeend", element);
-          } else {
-            alert("Maksimal nilai satuan adalah 9.");
-          }
-        } else if (target === "puluhan2") {
-          const multipliedValue = value * 10; // Kalikan nilai dengan 10 untuk puluhan pengurang
-          if (puluhanPengurang + multipliedValue) {
-            puluhanPengurang += multipliedValue;
-            puluhanCountPengurang.textContent = puluhanPengurang;
-            event.target.insertAdjacentHTML("beforeend", element);
-          } else {
-            alert("Nilai pengurang puluhan melebihi nilai awal.");
-          }
-        } else if (target === "satuan2") {
-          if (satuanPengurang + value <= 9) {
-            // Batas maksimal 9 untuk satuan pengurang
-            satuanPengurang += value;
-            satuanCountPengurang.textContent = satuanPengurang;
-            event.target.insertAdjacentHTML("beforeend", element);
-          } else {
-            alert("Maksimal nilai pengurang satuan adalah 9.");
-          }
+            target.appendChild(newStick); // Append the new element if necessary
+        }addNewStick();
+        } else {
+          alert("Maksimal nilai pengurang satuan adalah 9.");
         }
       }
-      document
-        .getElementById("validateButton")
-        .addEventListener("click", function () {
-          // Menghitung jumlah total di baris 1 (Puluhan dan Satuan)
-          const totalBaris1 = puluhanTotal + satuanTotal;
+  }
 
-          // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
-          const totalBaris2 = puluhanPengurang + satuanPengurang;
-          const hasil = totalBaris1 - totalBaris2;
+  document.getElementById("validateButton").addEventListener("click", function () {
+      // Menghitung jumlah total di baris 1 (Puluhan dan Satuan)
+      const totalBaris1 = puluhanTotal + satuanTotal;
 
-          // Variabel untuk menampilkan hasil
-          const hasilElement = document.getElementById("hasil");
+      // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
+      const totalBaris2 = puluhanPengurang + satuanPengurang;
 
-          // Cek apakah total baris 1 sesuai dengan minuend dan total baris 2 sesuai dengan subtrahend
-          if (totalBaris1 === minuend && totalBaris2 === subtrahend) {
-            // Tampilkan hasil pengurangan pada elemen dengan id "hasil"
+      if (totalBaris1 === minuend && totalBaris2 === subtrahend) {
+          alert("Benar! Total baris 1 sesuai dengan minuend dan total baris 2 sesuai dengan subtrahend.");
+      } else if (totalBaris1 !== minuend) {
+          alert("Salah! Baris 1 (jumlah stick) tidak sesuai dengan minuend.");
+      } else if (totalBaris2 !== subtrahend) {
+          alert("Salah! Baris 2 (jumlah stick) tidak sesuai dengan subtrahend.");
+      }
+  });
 
-            alert(
-              "Benar! Total baris 1 sesuai dengan minuend dan total baris 2 sesuai dengan subtrahend."
-            );
-          } else if (totalBaris1 !== minuend) {
-            alert("Salah! Baris 1 (jumlah stick) tidak sesuai dengan minuend.");
-          } else if (totalBaris2 !== subtrahend) {
-            alert(
-              "Salah! Baris 2 (jumlah stick) tidak sesuai dengan subtrahend."
-            );
-          }
-        });
+  document
+  .getElementById("checkAnswer")
+  .addEventListener("click", function () {
+    const answer = document.getElementById("answer").value;
+    const totalBaris1 = puluhanTotal + satuanTotal;
 
-      // Cek Jawaban
-      document
-        .getElementById("checkAnswer")
-        .addEventListener("click", function () {
-          const answer = document.getElementById("answer").value;
-          const totalBaris1 = puluhanTotal + satuanTotal;
+    // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
+    const totalBaris2 = puluhanPengurang + satuanPengurang;
+    const hasil = totalBaris1 - totalBaris2;
 
-          // Menghitung jumlah total di baris 2 (Puluhan2 dan Satuan2)
-          const totalBaris2 = puluhanPengurang + satuanPengurang;
-          const hasil = totalBaris1 - totalBaris2;
+    // Variabel untuk menampilkan hasil
+    const hasilElement = document.getElementById("hasil");
+    if (answer == correctAnswer) {
+      hasilElement.textContent = hasil;
+      alert("Jawaban benar!");
+    } else {
+      alert("Jawaban salah, coba lagi.");
+    }
+  });
+</script>
 
-          // Variabel untuk menampilkan hasil
-          const hasilElement = document.getElementById("hasil");
-          if (answer == correctAnswer) {
-            hasilElement.textContent = hasil;
-            alert("Jawaban benar!");
-          } else {
-            alert("Jawaban salah, coba lagi.");
-          }
-        });
-    </script>
   </body>
 </html>

@@ -9,52 +9,58 @@
     rel="stylesheet"
   />
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"></script>
     <title>Selamat Datang</title>
 </head>
-<body class="h-screen flex flex-col items-center justify-center relative">
 
+<body class=" flex flex-col items-center justify-center relative">
 
-    <!-- Background Image with Opacity -->
-    <div class="absolute inset-0 bg-cover bg-center opacity-50" style="background-image: url('asset/image/bg.png');"></div>
+  <!-- Background Image with Opacity -->
+  <div class="absolute inset-0 bg-cover bg-center opacity-70" style="background-image: url('asset/image/bg.png');"></div>
+  
+  <!-- Content Wrapper -->
+  <div class="relative z-10 flex flex-col items-center justify-center space-y-6 p-4">
+    
+    <div class="bg-white rounded-lg shadow-lg p-6 w-full max-w-md mt-6">
+     
+        <h1 class="text-3xl sm:text-3xl font-bold text-orange-600 mb-6 text-center">SELAMAT DATANG</h1>
+
+        <a href="/carabermain.html">
+        <button class="bg-orange-500 text-white rounded-lg py-2 px-4 mb-4 w-full hover:bg-orange-600 transition duration-200">
+            Petunjuk Bermain
+        </button>
+         </a>
+
+        <a href="/playgame.html" class="w-full">
+            <button class="bg-white text-orange-500 border-2 border-orange-400 rounded-lg py-2 px-4 mb-4 w-full hover:bg-orange-600 transition duration-200 flex items-center justify-center">
+                <img src="/asset/image/play_13965949.png" alt="" srcset="" width="30"> <span class="ml-4 text-xl font-bold">Game</span>
+            </button>
+        </a>
+
+        <a href="/profile.html">
+        <button class="bg-orange-500 text-white rounded-lg py-2 px-4 mb-4 w-full hover:bg-orange-600 transition duration-200">
+            Tentang Saya
+        </button>
+        </a>
+
+       
+     
+        <!-- Tombol atas -->
+        <a href="/index.html">
+            <button class="flex items-center">
+                <img src="/asset/image/left-arrow_16799279.png" alt="" width="40px">
+            </button>
+        </a>
+    
+     
+    </div>
     
 
-    <!-- Content Wrapper -->
-    <div class="relative z-10 flex flex-col items-center justify-center space-y-6">
-     
 
-        <!-- Content -->
-        <div class="bg-white rounded-lg shadow-lg p-8 w-11/12 sm:w-80">
-            <h1 class="text-3xl sm:text-4xl font-bold text-orange-600 mb-6 text-center">SELAMAT DATANG</h1>
-
-            <a href="/carabermain.html">
-            <button class="bg-orange-500 text-white rounded-lg py-2 px-4 mb-4 w-full hover:bg-orange-600 transition duration-200">
-                Petunjuk Bermain
-            </button>
-             </a>
-
-            <a href="/playgame.html" class="w-full">
-                <button class="bg-orange-500 text-white rounded-lg py-2 px-4 mb-4 w-full hover:bg-orange-600 transition duration-200">
-                    Game
-                </button>
-            </a>
-
-            <a href="/profile.html">
-            <button class="bg-orange-500 text-white rounded-lg py-2 px-4 mb-4 w-full hover:bg-orange-600 transition duration-200">
-                Profil
-            </button>
-            </a>
-
-            <a href="/index.html">
-                <button>
-                    <img src="/asset/image/left-arrow_16799279.png" alt="" srcset="">
-                </button>
-            </a>
-        </div>
-
-      
     </div>
 
-</body>
+    
+  </div>
 
+</body>
 </html>
+
