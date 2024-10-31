@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Papan Pengurangan</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/dragula/3.7.3/dragula.min.js'></script>  
+    <style>
+      body {
+        font-family: "Comic Sans MS", sans-serif;
+      }
+ 
+      .bordered-box {
+     
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        
+      }
+
+      /* Custom stick style */
+    </style>
+  </head>
+  <body >
+  
+
+
+
+    <!-- Background Image with Opacity -->
+    <div class="flex w-full mt-1" >
+      <!-- Area Soal -->
+       
+        <div
+          class="bordered-box bg-orange-300 border-2 border-orange-400 p-2 rounded-lg shadow-lg"
+        >
+        <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
+
+         <!-- Area Tempat Stik -->
+         <div class="bordered-box flex flex-col items-center mt-4 border-2 border-orange-200 bg-white ">
+          <div
+            class="stick-box mt-4 flex flex-row space-x-4 justify-center"
+            id="stickBox"
+          >
+            <!-- Stik-stik -->
+            <img 
+            src="/asset/image/wood_8572882.png" 
+            alt="Stick" 
+            class="h-14 w-4 mx-1 object-cover rounded-md cursor-move shadow-md stick" 
+            draggable="true" 
+            data-value="1"
+          />
+
+          <img 
+          src="/asset/image/wood_8572882.png" 
+          alt="Stick" 
+          class="h-14 w-4 mx-1 object-cover rounded-md cursor-move shadow-md stick" 
+          draggable="true" 
+          data-value="1"
+          />
+          
+
+          
+            
+            <!-- Tambahkan lebih banyak stik jika diperlukan -->
+          </div>
+          <div class="text-center text-lg font-semibold">Stik</div>
+
+        </div>
+      
+          <div class="text-center mt-4">
+            <div class="text-3xl font-bold" id="question"></div>
+          </div>
+         
+        </div>
+      
+
+      <!-- Tempat Penampung Puluhan & Satuan -->
+      <div
+        class="bordered-box col-span-2 w-full bg-gray-100 shadow-lg rounded-md border-2 border-orange-400"
+      >
+        <div class="flex justify-between">
+          <h1 class="font-bold text-lg text-left ">Puluhan</h1>
+          <h1 class="font-bold text-lg ml-32 ">Satuan</h1>
+        </div>
+
+        <div class="grid grid-cols-3 grid-rows-3 gap-2">
+  
+          <div
+            class="w-full bg-white border-2 border-orange-300 text-black text-center rounded-md flex justify-center items-center drop-area"
+            id="puluhan">
+            <span id="puluhanCount" class="font-bold text-lg">0</span>
+          </div>
+
+
+          <div
+          class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
+          id="satuan1">
+          <span id="satuanCount" class="font-bold text-lg">0</span>
+         </div>
+
+
+
+         
+
+          <button
+          id="validateButton"
+          class=" items-center justify-center flex"
+        >
+         <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">
+        </button>
+          
+
+       
+
+
+          <div
+          class="flex justify-center items-center w-full  bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
+          id="puluhan2"
+        >
+          <span id="puluhanCount2" class="font-bold text-lg">0</span>
+        </div>
+
+        <div
+        class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
+        id="satuan2">
+        <span id="satuanCount2" class="font-bold text-lg ">0</span>
+      </div>
+
+
+      
+        
+        
+
+         
+        
+
+        <button
+            id="checkAnswer"
+            class=" items-center justify-center flex"
+          >
+           <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
+          </button>
+          
+
+          <!-- Button for validation -->
+          <div class="col-span-2 text-center">
+            <div class="top-1/2 text-2xl font-bold text-right">-</div>
+            <div class="border-t-4 border-black mb-3"></div>
+            <div class="flex justify-center items-center">
+              <a href="/playgame.html">
+                <button>
+                  <img src="/asset/image/rotate_14874074.png" alt="" width="30px">
+                </button>
+              </a>
+
+              <a href="/play.html" class="mx-10">
+                <button>
+                  <img src="/asset/image/left-arrow_16799279.png" alt="" width="30px">
+                </button>
+                </a>
+              <!-- Mengurangi margin-top -->
+              <input
+                type="text"
+                id="answer"
+                class="border border-gray-300 p-1 rounded-lg w-24 text-center"
+                placeholder="Jawaban"
+              />
+              <div class="mx-3">
+                hasil: <span id="hasil" class="font-bold text-lg"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="z-10 flex items-center  justify-center">
+            <img src="/asset/image/lion_12541334.png" alt="" width="50px">
+            <img src="/asset/image/lion_12541334.png" alt="" width="50px" class="scale-x-[-1]">
+
+          </div>
+
+        </div>
+        
+      </div>
+
+    </div>
+    
+    </div>
+
+
+
+
+ 
+
+    <script>
+        
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    
+    // Buat soal dengan bilangan acak sesuai aturan
+    let minuend = getRandomInt(20, 30); // Minuend antara 20 dan 30
+    let minuendTens = Math.floor(minuend / 10);
+    let minuendOnes = minuend % 10;
+    
+    let subtrahendTens = getRandomInt(0, minuendTens - 1); // Puluhan subtrahend lebih kecil dari minuendTens
+    
+    // Pastikan satuan subtrahend lebih besar dari satuan minuend
+    let subtrahendOnes;
+    if (minuendOnes < 9) {
+        subtrahendOnes = getRandomInt(minuendOnes + 1, 9);
+    } else {
+        subtrahendOnes = 9; // Jika satuan minuend adalah 9, satuan subtrahend diatur ke 9
+    }
+    
+    // Gabungkan puluhan dan satuan untuk membentuk angka subtrahend
+    let subtrahend = subtrahendTens * 10 + subtrahendOnes;
+      let correctAnswer = minuend - subtrahend;
+      let puluhan1 = minuend.toString().length > 1 ? parseInt(minuend.toString()[0]) : 0;
+      let satuan1 = minuend.toString().length > 1 ? parseInt(minuend.toString()[1]) : parseInt(minuend.toString()[0])
+      let puluhan2 = 0
+      let satuan2 = 0
+
+      document.querySelector("#puluhanCount").innerHTML = puluhan1
+      document.querySelector("#satuanCount").innerHTML = satuan1
+
+      // Tampilkan soal dengan format khusus
+      document.getElementById("question").innerHTML = `
+    <div class="text-center">
+        <!-- Bagian Minuend (angka atas) -->
+        <div class="text-xl font-bold">${minuend}</div>
+        
+        <!-- Bagian Subtrahend (angka bawah dengan tanda pengurangan) -->
+        <div class="relative">
+            <!-- Tanda pengurangan (-) -->
+            <div class="text-xl font-bold ml-6">${subtrahend}</div>
+            <div class="absolute right-0 top-1/2 -translate-y-1/2 text-2xl font-bold">-</div>
+        </div>
+        
+        <!-- Garis Bawah -->
+        <div class="border-t-4 border-black mt-2"></div>
+    </div>`;
+
+// Fungsi untuk menampilkan stick di elemen dengan ID puluhan
+function displayStickPuluhan1() {
+    // Buat elemen stick baru
+    const newStick = document.createElement('img');
+    newStick.classList.add('stick', 'rounded-md', 'cursor-move', 'shadow-md', 'h-14', 'w-4', 'mx-1', "stickPuluhan1");
+    newStick.setAttribute('draggable', 'true');
+    newStick.setAttribute('data-value', '1');
+    newStick.src = '/asset/image/wood_8572882.png';
+    newStick.alt = 'Stick';
+    newStick.classList.add('object-cover');
+
+    // Tambahkan stick baru ke elemen dengan ID "puluhan" (bukan puluhanCount)
+    const puluhanElement = document.getElementById("puluhan");
+    puluhanElement.appendChild(newStick);
+}
+
+// Panggil fungsi displayStick untuk menampilkan stick pada elemen puluhan
+for (let i = 0; i < parseInt(minuend.toString().length > 1 ? minuend.toString()[0] : "0"); i++) {
+    displayStickPuluhan1();
+}
+
+// Fungsi untuk menampilkan stick di elemen dengan ID satuan
+function displayStickSatuan1() {
+    // Buat elemen stick baru
+    const newStick = document.createElement('img');
+    newStick.classList.add('stick', 'rounded-md', 'cursor-move', 'shadow-md', 'h-14', 'w-4', 'mx-1', "stickSatuan1");
+    newStick.setAttribute('draggable', 'true');
+    newStick.setAttribute('data-value', '1');
+    newStick.src = '/asset/image/wood_8572882.png';
+    newStick.alt = 'Stick';
+    newStick.classList.add('object-cover');
+
+    const satuanElement = document.getElementById("satuan1");
+    satuanElement.appendChild(newStick);
+}
+
+// Panggil fungsi displayStick untuk menampilkan stick pada elemen satuan
+for (let i = 0; i < parseInt(minuend.toString().length > 1 ? minuend.toString()[1] : minuend.toString()[0]); i++) {
+  displayStickSatuan1();
+}
+
+function displayStickSatuan2() {
+    // Buat elemen stick baru
+    const newStick = document.createElement('img');
+    newStick.classList.add('stick', 'rounded-md', 'cursor-move', 'shadow-md', 'h-14', 'w-4', 'mx-1', "stickSatuan2");
+    newStick.setAttribute('draggable', 'true');
+    newStick.setAttribute('data-value', '1');
+    newStick.src = '/asset/image/wood_8572882.png';
+    newStick.alt = 'Stick';
+    newStick.classList.add('object-cover');
+
+    const satuanElement = document.getElementById("satuan1");
+    satuanElement.appendChild(newStick);
+}
+
+dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")], {
+  direction: 'horizontal',
+  moves: function(el, container){
+    if(container.id == "puluhan"){
+      return true
+    }else{
+      return false
+    }
+  },
+})
+  .on("drop", function(el, container){
+    if(container.id == "satuan1"){
+      if(el.classList.contains("stickPuluhan1")){
+        puluhan1--
+        satuan1 = (parseInt(satuan1) + 10).toString()
+        document.querySelector("#puluhanCount").innerHTML = puluhan1
+        document.querySelector("#satuanCount").innerHTML = satuan1
+  
+        for (let i = 1; i < 10; i++) {
+          displayStickSatuan1();
+      }
+      }
+    }
+  })
+
+  dragula([document.querySelector("#satuan1"), document.querySelector("#satuan2")], {
+    moves: function(el, container){
+      if(container.id == "satuan1"){
+        return true
+      }else{
+        return false
+      }
+    }
+  })
+    .on("drop", function(el){
+      if(el.classList.contains("stickSatuan1")){
+        satuan1--
+        satuan2++
+        document.querySelector("#satuanCount").innerHTML = satuan1
+        document.querySelector("#satuanCount2").innerHTML = satuan2
+      }
+    })
+
+    dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")], {
+      direction: 'vertical'
+    })
+      .on("drop", function(el, container){
+        if(el.classList.contains("stickPuluhan1") && container.id == "puluhan2"){
+          puluhan1--
+          puluhan2++
+          document.querySelector("#puluhanCount").innerHTML = puluhan1
+          document.querySelector("#puluhanCount2").innerHTML = puluhan2
+        }
+      })
+
+  document.querySelector("#checkAnswer").addEventListener("click", () => {
+    if(correctAnswer == parseInt(`${puluhan1}${satuan1}`)){
+      alert("Hore benar ....!")
+    }else{
+      alert("Kamu salah :( ")
+    }
+  })
+
+</script>
+
+  </body>
+</html>
