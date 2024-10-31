@@ -93,27 +93,29 @@
           <div
             class="w-full bg-white border-2 border-orange-300 text-black text-center rounded-md flex justify-center items-center drop-area"
             id="puluhan">
-            <span id="puluhanCount" class="font-bold text-lg">0</span>
+            <span id="puluhanCount" class="font-bold text-lg" hidden>0</span>
           </div>
 
 
           <div
           class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
           id="satuan1">
-          <span id="satuanCount" class="font-bold text-lg">0</span>
+          <span id="satuanCount" class="font-bold text-lg" hidden>0</span>
          </div>
 
 
 
          
 
-          <button
-          id="validateButton"
-          class=" items-center justify-center flex"
-        >
-         <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">
-        </button>
-          
+        
+         <button
+         id="checkAnswer"
+         class=" items-center justify-center flex"
+       >
+       <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">
+
+       </button>
+       
 
        
 
@@ -122,13 +124,13 @@
           class="flex justify-center items-center w-full  bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
           id="puluhan2"
         >
-          <span id="puluhanCount2" class="font-bold text-lg">0</span>
+          <span id="puluhanCount2" class="font-bold text-lg" hidden>0</span>
         </div>
 
         <div
         class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
         id="satuan2">
-        <span id="satuanCount2" class="font-bold text-lg ">0</span>
+        <span id="satuanCount2" class="font-bold text-lg " hidden>0</span>
       </div>
 
 
@@ -137,26 +139,28 @@
         
 
          
-        
+      <button
+      id="validateButton"
+      class=" items-center justify-center flex"
+    >
+    <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
 
-        <button
-            id="checkAnswer"
-            class=" items-center justify-center flex"
-          >
-           <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
-          </button>
-          
+    </button>
+      
+
 
           <!-- Button for validation -->
           <div class="col-span-2 text-center">
             <div class="top-1/2 text-2xl font-bold text-right">-</div>
             <div class="border-t-4 border-black mb-3"></div>
             <div class="flex justify-center items-center">
-              <a href="/playgame.html">
+              <a href="/playmeminjam.html">
                 <button>
                   <img src="/asset/image/rotate_14874074.png" alt="" width="30px">
                 </button>
               </a>
+
+
 
               <a href="/play.html" class="mx-10">
                 <button>
@@ -190,6 +194,19 @@
     
     </div>
 
+    <!-- Custom Alert Modal -->
+<div id="customAlert" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+  <!-- Background Overlay -->
+  <div class="fixed inset-0 bg-gray-800 opacity-50"></div>
+
+  <!-- Modal Content -->
+  <div class="bg-white rounded-lg shadow-lg p-6 text-center z-10">
+    <h2 id="alertMessage" class="text-lg font-semibold mb-4"></h2>
+    <img id="animalImage" class="mx-auto mb-4 w-32 h-32 object-contain" alt="Animal Image">
+
+    <button id="closeAlert" class="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
+  </div>
+</div>
 
 
 
@@ -355,12 +372,57 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
       })
 
   document.querySelector("#checkAnswer").addEventListener("click", () => {
+
+    const answer = parseInt(document.getElementById("answer").value);
+    const customAlert = document.getElementById("customAlert");
+    const alertMessage = document.getElementById("alertMessage");
+    const animalImage = document.getElementById("animalImage");
+
     if(correctAnswer == parseInt(`${puluhan1}${satuan1}`)){
-      alert("Hore benar ....!")
+           alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
+      animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
     }else{
-      alert("Kamu salah :( ")
+      alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
+      animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
     }
+         // Tampilkan modal
+  customAlert.classList.remove("hidden");
+
+  // Menambahkan event listener untuk menutup modal
+  document.getElementById("closeAlert").addEventListener("click", function () {
+    customAlert.classList.add("hidden"); // Sembunyikan modal saat tombol OK diklik
+  });
   })
+
+  document.querySelector("#validateButton").addEventListener("click", () => {
+    // Ambil jawaban dari input yang diisi siswa
+    const answer = parseInt(document.getElementById("answer").value);
+    const hasilElement = document.getElementById("hasil");
+    const customAlert = document.getElementById("customAlert");
+    const alertMessage = document.getElementById("alertMessage");
+    const animalImage = document.getElementById("animalImage");
+  
+
+    // Validasi apakah jawaban siswa benar atau salah
+    if (answer === correctAnswer) {
+      hasilElement.textContent = answer;
+      alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
+      animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
+        
+    } else {
+      alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
+      animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
+    }
+     // Tampilkan modal
+  customAlert.classList.remove("hidden");
+
+  // Menambahkan event listener untuk menutup modal
+  document.getElementById("closeAlert").addEventListener("click", function () {
+    customAlert.classList.add("hidden"); // Sembunyikan modal saat tombol OK diklik
+  });
+});
+
+    
 
 </script>
 
