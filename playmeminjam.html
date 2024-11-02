@@ -22,6 +22,30 @@
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         
       }
+      #satuan1 {
+        display: flex;
+        flex-wrap: wrap; /* Membuat item turun ke baris baru */
+        align-items: start; /* Menyelaraskan stick di bagian atas */
+        overflow-y: auto; /* Menambahkan scroll vertical jika tinggi sudah mencapai batas */
+        gap: 5px; /* Menambahkan jarak antar-stick */
+      }
+      
+      .stick {
+        margin: 2px; /* Jarak antar-stick */
+      }
+      .drop-area {
+        display: flex;
+        flex-wrap: wrap; /* Membuat stick turun ke baris baru */
+        align-items: start; /* Menyelaraskan stick di bagian atas */
+        overflow-y: auto; /* Menambahkan scroll jika tinggi melebihi batas */
+        gap: 5px; /* Menambahkan jarak antar-stick */
+        min-height: 50px;
+        max-height: 200px; /* Kamu bisa menghapus max-height jika ingin height otomatis bertambah tanpa batas */
+      }
+      
+ 
+      
+      
 
       /* Custom stick style */
     </style>
@@ -73,11 +97,13 @@
           </div>
 
 
-          <div
-          class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area"
-          id="satuan1">
+                  <div
+          class="flex flex-wrap justify-center items-start w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area overflow-y-auto"
+          id="satuan1"
+          style="min-height: 50px;">
           <span id="satuanCount" class="font-bold text-lg" hidden>0</span>
-         </div>
+        </div>
+
 
 
 
@@ -119,45 +145,33 @@
             <div class="flex justify-center items-center">
 
 
-              <div class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area" id="akhirhasil">
-                <span id="akhirnilai" class="font-bold text-lg">0</span>
-              </div>
+              <div class="flex flex-wrap justify-center items-start w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area overflow-y-auto h-auto"
+              id="akhirhasil"
+              style="min-height: 50px; max-height: 200px;">
+           <span id="akhirnilai" class="font-bold text-lg">0</span>
+         </div>
+         
 
-            <button
-            id="checkAnswer"
-            class=" items-center justify-center flex"
-          >
-          <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">
-   
-          </button>
+            <button id="checkAnswer"class=" items-center justify-center flex mr-3">
+            <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">   
+            </button>
 
                  
-      <button
-      id="validateButton"
-      class=" items-center justify-center flex"
-    >
-    <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
+            <button id="validateButton"  class=" items-center justify-center flex mr-3">
+            <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
+            </button>
 
-    </button>
-
-
-
-
-
-
-              <a href="/playmeminjam.html">
+              <a href="/playmeminjam.html" class="items-center justify-center flex mr-3">
                 <button>
                   <img src="/asset/image/rotate_14874074.png" alt="" width="50px">
                 </button>
               </a>
 
-
-
-              <a href="/play.html" class="mx-10">
+              <a href="/play.html" class="items-center justify-center flex mr-3">
                 <button>
                   <img src="/asset/image/left-arrow_16799279.png" alt="" width="50px">
-                </button>
-                </a>
+                </button></a>
+
               <!-- Mengurangi margin-top -->
               <input
                 type="text"
@@ -239,17 +253,19 @@
       document.getElementById("question").innerHTML = `
     <div class="text-center">
         <!-- Bagian Minuend (angka atas) -->
-        <div class="text-xl font-bold">${minuend}</div>
+        <div class="text-xl font-bold">${minuend} - ${subtrahend}  =
+          
+        </div>
+                <div class="border-t-4 border-black mt-2"></div>
+
         
         <!-- Bagian Subtrahend (angka bawah dengan tanda pengurangan) -->
         <div class="relative">
             <!-- Tanda pengurangan (-) -->
-            <div class="text-xl font-bold ml-6">${subtrahend}</div>
-            <div class="absolute right-0 top-1/2 -translate-y-1/2 text-2xl font-bold">-</div>
+           
         </div>
         
         <!-- Garis Bawah -->
-        <div class="border-t-4 border-black mt-2"></div>
     </div>`;
 
 // Fungsi untuk menampilkan stick di elemen dengan ID puluhan
