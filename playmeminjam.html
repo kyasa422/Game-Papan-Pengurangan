@@ -42,31 +42,7 @@
 
          <!-- Area Tempat Stik -->
          <div class="bordered-box flex flex-col items-center mt-4 border-2 border-orange-200 bg-white ">
-          <div
-            class="stick-box mt-4 flex flex-row space-x-4 justify-center"
-            id="stickBox"
-          >
-            <!-- Stik-stik -->
-            <img 
-            src="/asset/image/wood_8572882.png" 
-            alt="Stick" 
-            class="h-14 w-4 mx-1 object-cover rounded-md cursor-move shadow-md stick" 
-            draggable="true" 
-            data-value="1"
-          />
-
-          <img 
-          src="/asset/image/wood_8572882.png" 
-          alt="Stick" 
-          class="h-14 w-4 mx-1 object-cover rounded-md cursor-move shadow-md stick" 
-          draggable="true" 
-          data-value="1"
-          />
-          
-
-          
-            
-            <!-- Tambahkan lebih banyak stik jika diperlukan -->
+          <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox">
           </div>
           <div class="text-center text-lg font-semibold">Stik</div>
 
@@ -88,7 +64,7 @@
           <h1 class="font-bold text-lg ml-32 ">Satuan</h1>
         </div>
 
-        <div class="grid grid-cols-3 grid-rows-3 gap-2">
+        <div class="grid grid-cols-2 grid-rows-2 gap-2">
   
           <div
             class="w-full bg-white border-2 border-orange-300 text-black text-center rounded-md flex justify-center items-center drop-area"
@@ -108,13 +84,7 @@
          
 
         
-         <button
-         id="checkAnswer"
-         class=" items-center justify-center flex"
-       >
-       <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">
-
-       </button>
+  
        
 
        
@@ -138,14 +108,7 @@
         
         
 
-         
-      <button
-      id="validateButton"
-      class=" items-center justify-center flex"
-    >
-    <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
-
-    </button>
+  
       
 
 
@@ -154,9 +117,37 @@
             <div class="top-1/2 text-2xl font-bold text-right">-</div>
             <div class="border-t-4 border-black mb-3"></div>
             <div class="flex justify-center items-center">
+
+
+              <div class="flex justify-center items-center w-full bg-white border-2 border-orange-300 text-black text-center rounded-md drop-area" id="akhirhasil">
+                <span id="akhirnilai" class="font-bold text-lg">0</span>
+              </div>
+
+            <button
+            id="checkAnswer"
+            class=" items-center justify-center flex"
+          >
+          <img src="/asset/image/check_17767092.png" alt="" srcset="" width="50px">
+   
+          </button>
+
+                 
+      <button
+      id="validateButton"
+      class=" items-center justify-center flex"
+    >
+    <img src="/asset/image/equal_9625441.png" alt="" srcset="" width="50px">
+
+    </button>
+
+
+
+
+
+
               <a href="/playmeminjam.html">
                 <button>
-                  <img src="/asset/image/rotate_14874074.png" alt="" width="30px">
+                  <img src="/asset/image/rotate_14874074.png" alt="" width="50px">
                 </button>
               </a>
 
@@ -164,7 +155,7 @@
 
               <a href="/play.html" class="mx-10">
                 <button>
-                  <img src="/asset/image/left-arrow_16799279.png" alt="" width="30px">
+                  <img src="/asset/image/left-arrow_16799279.png" alt="" width="50px">
                 </button>
                 </a>
               <!-- Mengurangi margin-top -->
@@ -172,19 +163,19 @@
                 type="text"
                 id="answer"
                 class="border border-gray-300 p-1 rounded-lg w-24 text-center"
-                placeholder="Jawaban"
+                placeholder="Jawaban" hidden
               />
               <div class="mx-3">
-                hasil: <span id="hasil" class="font-bold text-lg"></span>
+                <span id="hasil" class="font-bold text-lg" hidden></span>
               </div>
             </div>
           </div>
 
-          <div class="z-10 flex items-center  justify-center">
+          <!-- <div class="z-10 flex items-center  justify-center">
             <img src="/asset/image/lion_12541334.png" alt="" width="50px">
             <img src="/asset/image/lion_12541334.png" alt="" width="50px" class="scale-x-[-1]">
 
-          </div>
+          </div> -->
 
         </div>
         
@@ -316,6 +307,51 @@ function displayStickSatuan2() {
     satuanElement.appendChild(newStick);
 }
 
+// Function to display a stick in the stick box
+function displayStickbox() {
+  const newStick = document.createElement('img');
+  newStick.classList.add('stick', 'rounded-md', 'cursor-move', 'shadow-md', 'h-14', 'w-4', 'mx-1');
+  newStick.setAttribute('draggable', 'true');
+  newStick.setAttribute('data-value', '1');
+  newStick.src = '/asset/image/wood_8572882.png';
+  newStick.alt = 'Stick';
+  newStick.classList.add('object-cover');
+
+  const stickBox = document.getElementById("stickBox");
+  stickBox.appendChild(newStick);
+}
+
+// Function to ensure a minimum of two sticks in the stickBox
+function maintainStickCount() {
+  const stickBox = document.getElementById("stickBox");
+  while (stickBox.children.length < 2) {
+    displayStickbox();
+  }
+}
+
+// Initial display of two sticks
+maintainStickCount();
+
+// Initialize dragula for drag-and-drop functionality
+dragula([document.querySelector("#stickBox"), document.querySelector("#akhirhasil")], {
+  direction: 'horizontal',
+  moves: function(el, container) {
+    // Allow dragging from stickBox only
+    return container.id === "stickBox";
+  }
+}).on("drop", function(el, container) {
+  if (container.id === "akhirhasil") {
+    // Update the total value in akhirnilai
+    const currentValue = parseInt(document.getElementById("akhirnilai").innerText);
+    const stickValue = parseInt(el.getAttribute("data-value"));
+    document.getElementById("akhirnilai").innerText = currentValue + stickValue;
+
+    // Ensure two sticks remain in stickBox
+    maintainStickCount();
+  }
+});
+
+
 dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")], {
   direction: 'horizontal',
   moves: function(el, container){
@@ -371,6 +407,8 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
         }
       })
 
+      
+
   document.querySelector("#checkAnswer").addEventListener("click", () => {
 
     const answer = parseInt(document.getElementById("answer").value);
@@ -395,32 +433,32 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
   })
 
   document.querySelector("#validateButton").addEventListener("click", () => {
-    // Ambil jawaban dari input yang diisi siswa
-    const answer = parseInt(document.getElementById("answer").value);
     const hasilElement = document.getElementById("hasil");
     const customAlert = document.getElementById("customAlert");
     const alertMessage = document.getElementById("alertMessage");
     const animalImage = document.getElementById("animalImage");
   
-
-    // Validasi apakah jawaban siswa benar atau salah
-    if (answer === correctAnswer) {
-      hasilElement.textContent = answer;
-      alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
-      animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
-        
+   const stickCount = parseInt(document.getElementById("akhirnilai").textContent);
+  
+    // Validate if the stick count matches the correct answer
+    if (stickCount === correctAnswer) {
+      hasilElement.textContent = stickCount;
+      alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Message for correct answer
+      animalImage.src = "/asset/image/applause_8800644.png"; // Image for correct answer
     } else {
-      alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
-      animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
+      alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Message for incorrect answer
+      animalImage.src = "/asset/image/cry_17533870.png"; // Image for incorrect answer
     }
-     // Tampilkan modal
-  customAlert.classList.remove("hidden");
-
-  // Menambahkan event listener untuk menutup modal
-  document.getElementById("closeAlert").addEventListener("click", function () {
-    customAlert.classList.add("hidden"); // Sembunyikan modal saat tombol OK diklik
+  
+    // Show the modal
+    customAlert.classList.remove("hidden");
+  
+    // Add an event listener to close the modal
+    document.getElementById("closeAlert").addEventListener("click", function () {
+      customAlert.classList.add("hidden"); // Hide the modal when OK is clicked
+    });
   });
-});
+  
 
     
 
