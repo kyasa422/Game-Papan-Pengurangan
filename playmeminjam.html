@@ -346,7 +346,8 @@ function maintainStickCount() {
 // Initial display of two sticks
 maintainStickCount();
 
-// Function to disable and enable scroll
+
+// Function to toggle scroll
 function toggleScroll(disable) {
   if (disable) {
     document.body.style.overflow = 'hidden';
@@ -355,46 +356,55 @@ function toggleScroll(disable) {
   }
 }
 
-// Initialize dragula for drag-and-drop functionality
+// Prevent page refresh on mobile devices during drag
+function preventPageRefreshOnDrag(enable) {
+  if (enable) {
+    document.addEventListener('touchmove', preventDefaultTouch, { passive: false });
+  } else {
+    document.removeEventListener('touchmove', preventDefaultTouch, { passive: false });
+  }
+}
+
+// Prevent default touch behavior
+function preventDefaultTouch(e) {
+  e.preventDefault();
+}
+
+// Dragula setup for stickBox to akhirhasil
 dragula([document.querySelector("#stickBox"), document.querySelector("#akhirhasil")], {
   direction: 'horizontal',
   moves: function(el, container) {
-    // Allow dragging from stickBox only
     return container.id === "stickBox";
   }
 }).on("drag", function() {
-  // Disable scroll on drag start
   toggleScroll(true);
+  preventPageRefreshOnDrag(true); // Prevent page refresh on drag
 }).on("drop", function(el, container) {
   if (container.id === "akhirhasil") {
-    // Update the total value in akhirnilai
     const currentValue = parseInt(document.getElementById("akhirnilai").innerText);
     const stickValue = parseInt(el.getAttribute("data-value"));
     document.getElementById("akhirnilai").innerText = currentValue + stickValue;
 
-    // Ensure two sticks remain in stickBox
     maintainStickCount();
   }
-  // Enable scroll after drop
   toggleScroll(false);
+  preventPageRefreshOnDrag(false); // Allow page refresh after drop
 }).on("cancel", function() {
-  // Enable scroll if drag is canceled
   toggleScroll(false);
+  preventPageRefreshOnDrag(false); // Allow page refresh if drag is canceled
 });
 
-
+// Repeat the same setup for other dragula instances
 // Dragula setup for puluhan to satuan1 drag-and-drop
 dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")], {
   direction: 'horizontal',
   moves: function(el, container) {
     return container.id === "puluhan";
   },
-})
-.on("drag", function() {
-  // Disable scroll on drag start
+}).on("drag", function() {
   toggleScroll(true);
-})
-.on("drop", function(el, container) {
+  preventPageRefreshOnDrag(true);
+}).on("drop", function(el, container) {
   if (container.id === "satuan1" && el.classList.contains("stickPuluhan1")) {
     puluhan1--;
     satuan1 = (parseInt(satuan1) + 10).toString();
@@ -405,61 +415,56 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
       displayStickSatuan1();
     }
   }
-  // Enable scroll after drop
   toggleScroll(false);
-})
-.on("cancel", function() {
-  // Enable scroll if drag is canceled
+  preventPageRefreshOnDrag(false);
+}).on("cancel", function() {
   toggleScroll(false);
+  preventPageRefreshOnDrag(false);
 });
 
+// Repeat for other drag-and-drop instances
 // Dragula setup for satuan1 to satuan2 drag-and-drop
 dragula([document.querySelector("#satuan1"), document.querySelector("#satuan2")], {
   moves: function(el, container) {
     return container.id === "satuan1";
   }
-})
-.on("drag", function() {
-  // Disable scroll on drag start
+}).on("drag", function() {
   toggleScroll(true);
-})
-.on("drop", function(el) {
+  preventPageRefreshOnDrag(true);
+}).on("drop", function(el) {
   if (el.classList.contains("stickSatuan1")) {
     satuan1--;
     satuan2++;
     document.querySelector("#satuanCount").innerHTML = satuan1;
     document.querySelector("#satuanCount2").innerHTML = satuan2;
   }
-  // Enable scroll after drop
   toggleScroll(false);
-})
-.on("cancel", function() {
-  // Enable scroll if drag is canceled
+  preventPageRefreshOnDrag(false);
+}).on("cancel", function() {
   toggleScroll(false);
+  preventPageRefreshOnDrag(false);
 });
 
 // Dragula setup for puluhan to puluhan2 drag-and-drop
 dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")], {
   direction: 'vertical'
-})
-.on("drag", function() {
-  // Disable scroll on drag start
+}).on("drag", function() {
   toggleScroll(true);
-})
-.on("drop", function(el, container) {
+  preventPageRefreshOnDrag(true);
+}).on("drop", function(el, container) {
   if (el.classList.contains("stickPuluhan1") && container.id === "puluhan2") {
     puluhan1--;
     puluhan2++;
     document.querySelector("#puluhanCount").innerHTML = puluhan1;
     document.querySelector("#puluhanCount2").innerHTML = puluhan2;
   }
-  // Enable scroll after drop
   toggleScroll(false);
-})
-.on("cancel", function() {
-  // Enable scroll if drag is canceled
+  preventPageRefreshOnDrag(false);
+}).on("cancel", function() {
   toggleScroll(false);
+  preventPageRefreshOnDrag(false);
 });
+
 
   document.querySelector("#checkAnswer").addEventListener("click", () => {
 
