@@ -42,7 +42,10 @@
         min-height: 50px;
         max-height: 200px; /* Kamu bisa menghapus max-height jika ingin height otomatis bertambah tanpa batas */
       }
-      
+      body {
+        overscroll-behavior: none;
+        touch-action: manipulation;
+      }
  
       
       
@@ -351,8 +354,12 @@ maintainStickCount();
 function toggleScroll(disable) {
   if (disable) {
     document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
   } else {
     document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+
   }
 }
 
@@ -360,8 +367,10 @@ function toggleScroll(disable) {
 function preventPageRefreshOnDrag(enable) {
   if (enable) {
     document.addEventListener('touchmove', preventDefaultTouch, { passive: false });
+    document.addEventListener('touchstart', preventDefaultTouch, { passive: false });
   } else {
     document.removeEventListener('touchmove', preventDefaultTouch, { passive: false });
+    document.removeEventListener('touchstart', preventDefaultTouch, { passive: false });
   }
 }
 
