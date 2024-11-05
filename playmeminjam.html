@@ -59,24 +59,22 @@
     <div class="flex w-full mt-1" >
       <!-- Area Soal -->
        
-        <div
-          class="bordered-box bg-orange-300 border-2 border-orange-400 p-2 rounded-lg shadow-lg"
-        >
-        <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
-
-         <!-- Area Tempat Stik -->
-         <div class="bordered-box flex flex-col items-center mt-4 border-2 border-orange-200 bg-white ">
-          <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox">
-          </div>
-          <div class="text-center text-lg font-semibold">Stik</div>
-
-        </div>
-      
-          <div class="text-center mt-4">
-            <div class="text-3xl font-bold" id="question"></div>
-          </div>
-         
-        </div>
+      <div
+      class="bordered-box bg-orange-300 border-2 border-orange-400 p-2 rounded-lg shadow-lg flex flex-col justify-between  "
+    >
+      <h1 class="text-xl font-bold text-center">AYO Mencoba!</h1>
+    
+      <div class="text-center mt-4">
+        <div class="text-3xl font-bold" id="question"></div>
+      </div>
+    
+      <!-- Area Tempat Stik -->
+      <div class="bordered-box flex flex-col items-center mt-4 border-2 border-orange-200 bg-white mb-0">
+        <div class="stick-box mt-4 flex flex-row space-x-4 justify-center" id="stickBox"></div>
+        <div class="text-center text-lg font-semibold">Stik</div>
+      </div>
+    </div>
+    
       
 
       <!-- Tempat Penampung Puluhan & Satuan -->
@@ -334,7 +332,7 @@ function displayStickbox() {
   newStick.classList.add('object-cover');
 
   const stickBox = document.getElementById("stickBox");
-  stickBox.appendChild(newStick);
+  stickBox.appendChild(newStick); 
 }
 
 // Function to ensure a minimum of two sticks in the stickBox
@@ -348,6 +346,15 @@ function maintainStickCount() {
 // Initial display of two sticks
 maintainStickCount();
 
+// Function to disable and enable scroll
+function toggleScroll(disable) {
+  if (disable) {
+    document.body.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+  }
+}
+
 // Initialize dragula for drag-and-drop functionality
 dragula([document.querySelector("#stickBox"), document.querySelector("#akhirhasil")], {
   direction: 'horizontal',
@@ -355,6 +362,9 @@ dragula([document.querySelector("#stickBox"), document.querySelector("#akhirhasi
     // Allow dragging from stickBox only
     return container.id === "stickBox";
   }
+}).on("drag", function() {
+  // Disable scroll on drag start
+  toggleScroll(true);
 }).on("drop", function(el, container) {
   if (container.id === "akhirhasil") {
     // Update the total value in akhirnilai
@@ -365,6 +375,11 @@ dragula([document.querySelector("#stickBox"), document.querySelector("#akhirhasi
     // Ensure two sticks remain in stickBox
     maintainStickCount();
   }
+  // Enable scroll after drop
+  toggleScroll(false);
+}).on("cancel", function() {
+  // Enable scroll if drag is canceled
+  toggleScroll(false);
 });
 
 
