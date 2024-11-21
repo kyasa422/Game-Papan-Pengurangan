@@ -151,13 +151,19 @@
             <div class="top-1/2 text-2xl font-bold text-right">-</div>
             <div class="border-t-4 border-black mb-3"></div>
             <div class="flex justify-center items-center">
-              <a href="/playgame.html">
+              <a href="/petunjuktanpameminjam.html">
+                <button>
+                  <img src="/asset/image/book_9740461.png" alt="" width="30px">
+                </button>
+              </a>
+
+              <a href="/playgame.html" class="ml-5">
                 <button>
                   <img src="/asset/image/rotate_14874074.png" alt="" width="30px">
                 </button>
               </a>
 
-              <a href="/play.html" class="mx-10">
+              <a href="/play.html" class="mx-5">
                 <button>
                   <img src="/asset/image/left-arrow_16799279.png" alt="" width="30px">
                 </button>
@@ -199,6 +205,15 @@
   <div class="bg-white rounded-lg shadow-lg p-6 text-center z-10">
     <h2 id="alertMessage" class="text-lg font-semibold mb-4"></h2>
     <img id="animalImage" class="mx-auto mb-4 w-32 h-32 object-contain" alt="Animal Image">
+    <audio id="successSound" hidden>
+      <source src="asset/myinstants.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="wrongSound" hidden>
+      <source src="asset/audio.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
 
     <button id="closeAlert" class="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
   </div>
@@ -223,14 +238,10 @@
       document.getElementById("question").innerHTML = `
     <div class="text-center">
         <!-- Bagian Minuend (angka atas) -->
-        <div class="text-xl font-bold">${minuend}</div>
+        <div class="text-xl font-bold">${minuend} - ${subtrahend}  =
         
         <!-- Bagian Subtrahend (angka bawah dengan tanda pengurangan) -->
-        <div class="relative">
-            <!-- Tanda pengurangan (-) -->
-            <div class="text-xl font-bold ml-6">${subtrahend}</div>
-            <div class="absolute right-0 top-1/2 -translate-y-1/2 text-2xl font-bold">-</div>
-        </div>
+ 
         
         <!-- Garis Bawah -->
         <div class="border-t-4 border-black mt-2"></div>
@@ -456,13 +467,17 @@ document.querySelectorAll('.stick').forEach((stick) => {
     if (totalBaris1 === minuend && totalBaris2 === subtrahend) {
         message = "Hore..! Penempatan Stick Kamu Benar";
         animalImage.src = '/asset/image/birthday-celebration_9905384.png';
+        successSound.play(); // Putar suara untuk jawaban benar
+
     } else if (totalBaris1 !== minuend) {
         message = "Salah! Penempatan di Baris 1";
         animalImage.src = '/asset/image/cry_4398026.png';
+        wrongSound.play();
 
     } else if (totalBaris2 !== subtrahend) {
         message = "Salah! Penempatan di Baris 2 ";
         animalImage.src = '/asset/image/cry_4398026.png';
+        wrongSound.play();
 
     }
 
@@ -503,10 +518,13 @@ document
     hasilElement.textContent = hasil;
     alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
     animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
+    successSound.play(); // Putar suara untuk jawaban benar
+
 
   } else {
     alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
     animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
+    wrongSound.play(); // Putar suara untuk jawaban salah
   }
 
   // Tampilkan modal
