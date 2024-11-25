@@ -210,6 +210,16 @@
     <h2 id="alertMessage" class="text-lg font-semibold mb-4"></h2>
     <img id="animalImage" class="mx-auto mb-4 w-32 h-32 object-contain" alt="Animal Image">
 
+    <audio id="successSound" hidden>
+      <source src="asset/myinstants.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <audio id="wrongSound" hidden>
+      <source src="asset/audio.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
     <button id="closeAlert" class="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
   </div>
 </div>
@@ -485,9 +495,13 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")
     if(correctAnswer == parseInt(`${puluhan1}${satuan1}`)){
            alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
       animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
+      successSound.play(); // Putar suara untuk jawaban benar
+
     }else{
       alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
       animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
+      wrongSound.play();
+
     }
          // Tampilkan modal
   customAlert.classList.remove("hidden");
@@ -511,9 +525,13 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")
       hasilElement.textContent = stickCount;
       alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Message for correct answer
       animalImage.src = "/asset/image/applause_8800644.png"; // Image for correct answer
+      successSound.play(); // Putar suara untuk jawaban benar
+
     } else {
       alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Message for incorrect answer
       animalImage.src = "/asset/image/cry_17533870.png"; // Image for incorrect answer
+      wrongSound.play();
+
     }
   
     // Show the modal
