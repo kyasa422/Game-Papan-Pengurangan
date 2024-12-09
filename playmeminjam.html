@@ -491,13 +491,21 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")
     const customAlert = document.getElementById("customAlert");
     const alertMessage = document.getElementById("alertMessage");
     const animalImage = document.getElementById("animalImage");
+    const replaceconrectanswer = correctAnswer + 1
 
-    if(correctAnswer == parseInt(`${puluhan1}${satuan1}`)){
+    if(replaceconrectanswer == parseInt(`${puluhan1}${satuan1}`)){
+      console.log(`${puluhan1}${satuan1}`)
+      console.log(replaceconrectanswer)
+      console.log(correctAnswer)
+
            alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
       animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
       successSound.play(); // Putar suara untuk jawaban benar
 
     }else{
+      console.log(`${puluhan1}${satuan1}`)
+
+      console.log(correctAnswer)
       alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
       animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
       wrongSound.play();
