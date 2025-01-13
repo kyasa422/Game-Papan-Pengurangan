@@ -420,13 +420,13 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
   moves: function(el, container) {
     return container.id === "puluhan";
   },
-}).on("drag", function() {
-  toggleScroll(true);
-  preventPageRefreshOnDrag(true);
 }).on("drop", function(el, container) {
   if (container.id === "satuan1" && el.classList.contains("stickPuluhan1")) {
+    console.log("Before Update:", { puluhan1, satuan1 });
     puluhan1--;
-    satuan1 = (parseInt(satuan1) + 10).toString();
+    satuan1 = (parseInt(satuan1) + 10);
+    console.log("After Update:", { puluhan1, satuan1 });
+
     document.querySelector("#puluhanCount").innerHTML = puluhan1;
     document.querySelector("#satuanCount").innerHTML = satuan1;
 
@@ -434,6 +434,8 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
       displayStickSatuan1();
     }
   }
+
+
   toggleScroll(false);
   preventPageRefreshOnDrag(false);
 }).on("cancel", function() {
@@ -446,23 +448,48 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#satuan1")]
 dragula([document.querySelector("#satuan1"), document.querySelector("#satuan2")], {
   moves: function(el, container) {
     return container.id === "satuan1";
+    
   }
+  
 }).on("drag", function() {
+  console.log("Drag started");
   toggleScroll(true);
   preventPageRefreshOnDrag(true);
 }).on("drop", function(el) {
+  console.log("Drop event triggered");
+  console.log("Element dropped:", el);
+
   if (el.classList.contains("stickSatuan1")) {
+    console.log("Element classes:", el.classList);
+
+    console.log("Before update:", { satuan1, satuan2 });
+
+    // Update values
     satuan1--;
     satuan2++;
+
+    // Update the DOM
     document.querySelector("#satuanCount").innerHTML = satuan1;
     document.querySelector("#satuanCount2").innerHTML = satuan2;
+
+    console.log("After update:", { satuan1, satuan2 });
+  } else {
+    console.log("Element classes:", el.classList);
+
+    console.log("Element dropped is not valid for updating values.");
+    satuan2++;
+    document.querySelector("#satuanCount2").innerHTML = satuan2;
+
   }
+
   toggleScroll(false);
   preventPageRefreshOnDrag(false);
 }).on("cancel", function() {
+  console.log("Drag cancelled");
   toggleScroll(false);
   preventPageRefreshOnDrag(false);
 });
+
 
 // Dragula setup for puluhan to puluhan2 drag-and-drop
 dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")], {
@@ -485,40 +512,40 @@ dragula([document.querySelector("#puluhan"), document.querySelector("#puluhan2")
 });
 
 
-  document.querySelector("#checkAnswer").addEventListener("click", () => {
+document.querySelector("#checkAnswer").addEventListener("click", () => {
+  const answer = parseInt(document.getElementById("answer").value);
+  const customAlert = document.getElementById("customAlert");
+  const alertMessage = document.getElementById("alertMessage");
+  const animalImage = document.getElementById("animalImage");
+  const replaceconrectanswer = correctAnswer;
 
-    const answer = parseInt(document.getElementById("answer").value);
-    const customAlert = document.getElementById("customAlert");
-    const alertMessage = document.getElementById("alertMessage");
-    const animalImage = document.getElementById("animalImage");
-    const replaceconrectanswer = correctAnswer + 1
+  // Debugging log
+  console.log("Jawaban dari drop (Puluhan1 + Satuan1):", `${puluhan1}${satuan1}`);
+  console.log("ReplaceCorrectAnswer:", replaceconrectanswer);
+  console.log("Correct Answer:", correctAnswer);
 
-    if(replaceconrectanswer == parseInt(`${puluhan1}${satuan1}`)){
-      console.log(`${puluhan1}${satuan1}`)
-      console.log(replaceconrectanswer)
-      console.log(correctAnswer)
-
-           alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
+  if (replaceconrectanswer === parseInt(`${puluhan1}${satuan1}`)) {
+      console.log("Jawaban benar!");
+      alertMessage.textContent = "Selamat Jawaban anda benar..!"; // Pesan untuk jawaban benar
       animalImage.src = "/asset/image/applause_8800644.png"; // Gambar untuk jawaban benar
       successSound.play(); // Putar suara untuk jawaban benar
-
-    }else{
-      console.log(`${puluhan1}${satuan1}`)
-
-      console.log(correctAnswer)
+  } else {
+      console.log("Jawaban salah!");
+      console.log("Jawaban soal:", replaceconrectanswer);
       alertMessage.textContent = "Yah Jawaban salah, coba lagi."; // Pesan untuk jawaban salah
       animalImage.src = "/asset/image/cry_17533870.png"; // Gambar untuk jawaban salah
       wrongSound.play();
+  }
 
-    }
-         // Tampilkan modal
+
+
   customAlert.classList.remove("hidden");
 
   // Menambahkan event listener untuk menutup modal
   document.getElementById("closeAlert").addEventListener("click", function () {
     customAlert.classList.add("hidden"); // Sembunyikan modal saat tombol OK diklik
   });
-  })
+  });
 
   document.querySelector("#validateButton").addEventListener("click", () => {
     const hasilElement = document.getElementById("hasil");
